@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { FaPlus, FaMinus } from 'react-icons/fa';
 
 interface Product {
@@ -13,21 +13,29 @@ interface ProductCardProps {
   category: string;
   imageSrc: string;
   price: string;
-  updateCartCount: (product: Product, change: number) => void; // Mettre à jour ici
+  updateCartCount: (product: Product, change: number) => void;
 }
 
 const ProductCard: React.FC<ProductCardProps> = ({ name, imageSrc, price, updateCartCount }) => {
   const [count, setCount] = useState(0);
 
+  useEffect(() => {
+    // Récupérer le compteur depuis localStorage à l'initialisation
+    const storedCount = parseInt(localStorage.getItem(`product-${name}`) || '0', 10);
+    setCount(storedCount);
+  }, [name]);
+
   const handleAddClick = () => {
-    setCount(count + 1);
-    updateCartCount({ name, category: 'Catégorie', imageSrc, price }, 1); // Ajouter 1 au panier
+    const newCount = count + 1;
+    setCount(newCount);
+    updateCartCount({ name, category: 'Catégorie', imageSrc, price }, 1);
   };
 
   const handleRemoveClick = () => {
     if (count > 0) {
-      setCount(count - 1);
-      updateCartCount({ name, category: 'Catégorie', imageSrc, price }, -1); // Retirer 1 du panier
+      const newCount = count - 1;
+      setCount(newCount);
+      updateCartCount({ name, category: 'Catégorie', imageSrc, price }, -1);
     }
   };
 

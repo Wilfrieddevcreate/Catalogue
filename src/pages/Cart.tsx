@@ -20,6 +20,9 @@ const Cart: React.FC = () => {
     const updatedItems = cartItems.filter(item => item.name !== name);
     setCartItems(updatedItems);
     localStorage.setItem('cart', JSON.stringify(updatedItems));
+  
+    // Mettre à jour le compteur de ce produit dans le localStorage
+    localStorage.removeItem(`product-${name}`);
   };
 
   return (
@@ -51,7 +54,6 @@ const Cart: React.FC = () => {
               </button>
             </div>
           ))}
-          {/* Afficher le total des articles ici si besoin */}
         </div>
       )}
     </div>
