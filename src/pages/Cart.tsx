@@ -96,8 +96,11 @@ const Cart: React.FC = () => {
                     className="w-24 h-24 object-cover rounded-lg mr-4"
                   />
                   <div>
+                    <Link to={"/detail"}>
+                    
                     <h3 className="lg:text-xl font-semibold">{item.name}</h3>
                     <p className="text-gray-500 text-sm mt-2">{item.price}</p>
+                    </Link>
                     <div className="flex items-center mt-1">
                       <button
                         onClick={() => decreaseQuantity(item.name)}
