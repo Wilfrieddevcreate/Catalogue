@@ -1,6 +1,5 @@
 import React from 'react';
 import ProductCard from './ProductCard';
-
 interface Product {
   name: string;
   category: string;
@@ -38,6 +37,7 @@ const ProductList: React.FC<ProductListProps> = ({ products, updateCartCount }) 
                 />
               ))}
           </div>
+        
         </div>
       ))}
     </div>

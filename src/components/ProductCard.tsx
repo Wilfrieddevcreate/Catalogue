@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { FaPlus, FaMinus } from 'react-icons/fa';
+import { Link } from 'react-router-dom';
 
 interface Product {
   name: string;
@@ -26,35 +27,32 @@ const ProductCard: React.FC<ProductCardProps> = ({ name, imageSrc, price, update
   }, [name]);
 
   const handleAddClick = () => {
-    setCount(prevCount => {
-      const newCount = prevCount + 1;
-      localStorage.setItem(`product-${name}`, newCount.toString());
-      updateCartCount({ name, category: 'Catégorie', imageSrc, price }, 1);
-      return newCount;
-    });
+    const newCount = count + 1;
+    setCount(newCount);
+    updateCartCount({ name, category: 'Catégorie', imageSrc, price }, 1);
   };
-  
+
   const handleRemoveClick = () => {
-    setCount(prevCount => {
-      if (prevCount > 0) {
-        const newCount = prevCount - 1;
-        localStorage.setItem(`product-${name}`, newCount.toString());
-        updateCartCount({ name, category: 'Catégorie', imageSrc, price }, -1);
-        return newCount;
-      }
-      return prevCount;
-    });
+    if (count > 0) {
+      const newCount = count - 1;
+      setCount(newCount);
+      updateCartCount({ name, category: 'Catégorie', imageSrc, price }, -1);
+    }
   };
-  
 
   return (
     <div className="flex items-center justify-between border p-4">
       <div className="flex items-center">
-        <img src={imageSrc} alt={name} className="w-24 h-24 object-cover rounded-lg mr-4" />
-        <div>
-          <h3 className="lg:text-xl text-sm font-semibold">{name}</h3>
-          <p className="text-gray-500 text-sm mt-2">{price}</p>
-        </div>
+        {/* Lien vers la page des détails */}
+        <Link to={"/detail"} className="flex items-center">
+          {/* Image du produit */}
+          <img src={imageSrc} alt={name} className="w-24 h-24 object-cover rounded-lg mr-4" />
+          {/* Détails du produit */}
+          <div>
+            <h3 className="text-xl font-semibold">{name}</h3>
+            <p className="text-gray-500 mt-2">{price}</p>
+          </div>
+        </Link>
       </div>
 
       <div className="flex items-center">
@@ -63,7 +61,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ name, imageSrc, price, update
             <button onClick={handleRemoveClick} className="text-gray-600 hover:text-gray-900 bg-gray-200 p-1 rounded-sm">
               <FaMinus size={20} />
             </button>
-            <span className="mx-2  text-sm">{count}</span>
+            <span className="mx-2 text-lg">{count}</span>
           </>
         )}
         <button onClick={handleAddClick} className="text-gray-600 hover:text-gray-900 bg-gray-200 p-1 rounded-sm">
