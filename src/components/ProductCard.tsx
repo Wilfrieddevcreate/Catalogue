@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { FaPlus, FaMinus } from 'react-icons/fa';
+import { Link } from 'react-router-dom';
 
 interface Product {
   name: string;
@@ -13,32 +14,45 @@ interface ProductCardProps {
   category: string;
   imageSrc: string;
   price: string;
-  updateCartCount: (product: Product, change: number) => void; // Mettre à jour ici
+  updateCartCount: (product: Product, change: number) => void;
 }
 
 const ProductCard: React.FC<ProductCardProps> = ({ name, imageSrc, price, updateCartCount }) => {
   const [count, setCount] = useState(0);
 
+  useEffect(() => {
+    // Récupérer le compteur depuis localStorage à l'initialisation
+    const storedCount = parseInt(localStorage.getItem(`product-${name}`) || '0', 10);
+    setCount(storedCount);
+  }, [name]);
+
   const handleAddClick = () => {
-    setCount(count + 1);
-    updateCartCount({ name, category: 'Catégorie', imageSrc, price }, 1); // Ajouter 1 au panier
+    const newCount = count + 1;
+    setCount(newCount);
+    updateCartCount({ name, category: 'Catégorie', imageSrc, price }, 1);
   };
 
   const handleRemoveClick = () => {
     if (count > 0) {
-      setCount(count - 1);
-      updateCartCount({ name, category: 'Catégorie', imageSrc, price }, -1); // Retirer 1 du panier
+      const newCount = count - 1;
+      setCount(newCount);
+      updateCartCount({ name, category: 'Catégorie', imageSrc, price }, -1);
     }
   };
 
   return (
     <div className="flex items-center justify-between border p-4">
       <div className="flex items-center">
-        <img src={imageSrc} alt={name} className="w-24 h-24 object-cover rounded-lg mr-4" />
-        <div>
-          <h3 className="text-xl font-semibold">{name}</h3>
-          <p className="text-gray-500 mt-2">{price}</p>
-        </div>
+        {/* Lien vers la page des détails */}
+        <Link to={"/detail"} className="flex items-center">
+          {/* Image du produit */}
+          <img src={imageSrc} alt={name} className="w-24 h-24 object-cover rounded-lg mr-4" />
+          {/* Détails du produit */}
+          <div>
+            <h3 className="text-xl font-semibold">{name}</h3>
+            <p className="text-gray-500 mt-2">{price}</p>
+          </div>
+        </Link>
       </div>
 
       <div className="flex items-center">

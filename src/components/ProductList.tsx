@@ -1,6 +1,5 @@
 import React from 'react';
 import ProductCard from './ProductCard';
-
 interface Product {
   name: string;
   category: string;
@@ -21,7 +20,7 @@ const ProductList: React.FC<ProductListProps> = ({ products, updateCartCount }) 
       {categories.map((category) => (
         <div key={category} className="mb-10">
           <div className='flex justify-between'>
-            <h2 className="text-2xl font-bold mb-4">{category}</h2>
+            <h2 className="text-xl font-bold mb-4">{category}</h2>
             <p>Tout voir</p>
           </div>
           <div className="space-y-6">
@@ -38,6 +37,7 @@ const ProductList: React.FC<ProductListProps> = ({ products, updateCartCount }) 
                 />
               ))}
           </div>
+        
         </div>
       ))}
     </div>
