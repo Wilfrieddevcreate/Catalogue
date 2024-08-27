@@ -99,7 +99,7 @@ const Cart: React.FC = () => {
                     <Link to={"/detail"}>
                     
                     <h3 className="lg:text-xl font-semibold">{item.name}</h3>
-                    <p className="text-gray-500 text-sm mt-2">{item.price}</p>
+                    <p className="text-gray-500 text-sm mt-2"><div dangerouslySetInnerHTML={{ __html: item.price }} /></p>
                     </Link>
                     <div className="flex items-center mt-1">
                       <button

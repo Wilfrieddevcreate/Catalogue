@@ -50,7 +50,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ name, imageSrc, price, update
           {/* Détails du produit */}
           <div>
             <h3 className="text-xl font-semibold">{name}</h3>
-            <p className="text-gray-500 mt-2">{price}</p>
+            <p className="text-gray-500 mt-2"><div dangerouslySetInnerHTML={{ __html: price }} /></p>
           </div>
         </Link>
       </div>
