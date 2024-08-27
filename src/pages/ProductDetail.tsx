@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import Header from '../components/Header';
 import { Link } from 'react-router-dom';
+import { IoIosArrowBack } from "react-icons/io";
 
 interface Product {
   name: string;
@@ -76,9 +77,19 @@ const ProductDetailPage: React.FC = () => {
   return (
     <div>
       <Header cartCount={cartItems.length} />
-      
+      <div className='container mx-auto px-4 mt-8 flex '>
+
+
+      <Link to={"/"}>
+        
+        <div className="mb-6 text-2xl">
+          <IoIosArrowBack />
+        </div>
+        </Link>
+      </div>
       <div className="flex justify-center items-center min-h-screen bg-gray-100">
-        <div className="container mx-auto p-4 max-w-sm">
+     
+        <div className="container">
           <img src={product.imageSrc} alt={product.name} className="w-full h-64 object-cover rounded-lg" />
           <h1 className="text-2xl font-bold mt-4 text-center">{product.name}</h1>
           <p className="text-xl font-semibold mt-2 text-center text-gray-600">{product.price}</p>
@@ -103,7 +114,7 @@ const ProductDetailPage: React.FC = () => {
           <div className='flex justify-center mt-5'>
           <Link to={"/panier"}>
             <button  className='bg-green-700 py-2 px-1 rounded-sm text-white'>
-              Voir le panier
+              Voir le panier ({cartItems.length})
             </button>
           </Link>
           </div>
