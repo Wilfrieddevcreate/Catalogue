@@ -89,10 +89,10 @@ const Home: React.FC = () => {
       <div>
         <ProductList products={products} updateCartCount={updateCartCount} />
       </div>
-      <div className="flex justify-center items-center text-sm ">
+      <div className="flex justify-center items-center text-justify mb-2 text-sm ">
         <p>Vous cherchez autre chose? Envoyez un message à ...</p>
       </div>
-      <div className="flex justify-center items-center">
+      <div className="flex justify-center items-center mb-2">
         <button className="bg-[#00a884] text-white px-3 text-sm py-1 rounded-full">Message</button>
       </div>
 
