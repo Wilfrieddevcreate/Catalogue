@@ -1,5 +1,6 @@
 import React from 'react';
 import ProductCard from './ProductCard';
+import { Link } from 'react-router-dom';
 interface Product {
   name: string;
   category: string;
@@ -21,7 +22,9 @@ const ProductList: React.FC<ProductListProps> = ({ products, updateCartCount }) 
         <div key={category} className="mb-10">
           <div className='flex justify-between'>
             <h2 className="text-xl font-bold mb-4">{category}</h2>
+            <Link to={`/categorie/${category}`}>
             <p>Tout voir</p>
+            </Link>
           </div>
           <div className="space-y-6">
             {products
