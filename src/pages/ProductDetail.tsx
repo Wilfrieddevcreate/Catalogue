@@ -79,7 +79,9 @@ if(error){
     }
   };
 
-  if (!product) return <div>Loading...</div>;
+  if (!product) return(<div className="flex items-center justify-center my-6">
+    <div className="animate-spin w-8 h-8 border-4 border-green-200 border-t-transparent rounded-full"></div>
+  </div>);
 
   return (
     <div className="min-h-screen bg-gray-100">
