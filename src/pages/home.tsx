@@ -76,12 +76,20 @@ const Home: React.FC = () => {
         )}
       </div>
       
-      <div className="flex justify-center container sm:ml-3 md:ml-2 items-center text-center mb-2 text-sm ">
+      <div className="flex justify-center container sm:ml-6 md:ml-5 items-center text-center mb-2 text-sm ">
         <p>Vous cherchez autre chose? Envoyez un message à ...</p>
       </div>
       <div className="flex justify-center items-center mb-2">
-        <button className="bg-[#25D366] text-white px-3 text-sm py-1 rounded-full">Message</button>
-      </div>
+  <a
+    href="https://wa.me/22961790448"
+    target="_blank" 
+    rel="noopener noreferrer"
+  >
+    <button className="bg-[#25D366] text-white px-3 text-sm py-1 rounded-full">
+      Message
+    </button>
+  </a>
+</div>
 
       {/* Voir le panier Button */}
       {cartCount > 0 && (
