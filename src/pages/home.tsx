@@ -80,14 +80,14 @@ const Home: React.FC = () => {
         <p>Vous cherchez autre chose? Envoyez un message à ...</p>
       </div>
       <div className="flex justify-center items-center mb-2">
-        <button className="bg-[#00a884] text-white px-3 text-sm py-1 rounded-full">Message</button>
+        <button className="bg-[#25D366] text-white px-3 text-sm py-1 rounded-full">Message</button>
       </div>
 
       {/* Voir le panier Button */}
       {cartCount > 0 && (
         <div className="fixed bottom-4 right-4">
           <Link to={"/panier"}>
-            <button className="bg-[#00a884] text-white px-4 py-2 rounded-lg shadow-lg">
+            <button className="bg-[#25D366] text-white px-4 py-2 rounded-lg shadow-lg">
               Voir le panier
             </button>
           </Link>

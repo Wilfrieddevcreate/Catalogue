@@ -11,7 +11,7 @@ const Header: React.FC<HeaderProps> = ({ cartCount }) => {
   return (
     <>
     
-    <div className="bg-[#00a884] fixed top-0 left-0 right-0 z-10">
+    <div className="bg-[#25D366] fixed top-0 left-0 right-0 z-10">
       <div className="container mx-auto flex items-center justify-between p-4 md:p-6 text-white">
       <Link to={"/"}>
         

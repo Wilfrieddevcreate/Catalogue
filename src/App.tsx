@@ -12,7 +12,7 @@ function App() {
     <Routes>
     <Route path="/" element={<Home />} />
     <Route path="/panier" element={<Cart />} />
-    <Route path="/detail" element={<ProductDetailPage />} />
+    <Route path={`/detail/:productName`} element={<ProductDetailPage />} />
 
 
     
