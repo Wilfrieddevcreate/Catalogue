@@ -133,13 +133,13 @@ const Cart: React.FC = () => {
 
         <div className="flex justify-center">
           {cartItems.length > 0 ? (
-            <p className="mt-3 bg-[#00a884] px-2 py-2 w-auto rounded-sm text-white">
+            <p className="mt-3 bg-[#25D366] px-2 py-2 w-auto rounded-sm text-white">
               Passer la commande
             </p>
           ) : (
            <Link to={"/"}>
            
-            <p className="mt-3 bg-[#00a884] px-2 py-2 w-auto rounded-sm text-white">
+            <p className="mt-3 bg-[#25D366] px-2 py-2 w-auto rounded-sm text-white">
               Voir le catalogue
             </p>
            </Link>
