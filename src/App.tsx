@@ -4,6 +4,7 @@ import ScrollToTop from "./components/Scrolltop";
 import Home from "./pages/home";
 import Cart from "./pages/Cart"
 import ProductDetailPage from "./pages/ProductDetail";
+import CategorieProducts from "./pages/cateogorieProduct";
 function App() {
 
   return (
@@ -12,7 +13,10 @@ function App() {
     <Routes>
     <Route path="/" element={<Home />} />
     <Route path="/panier" element={<Cart />} />
+    
     <Route path={`/detail/:productName`} element={<ProductDetailPage />} />
+    <Route path={`/categorie/:categoryName`} element={<CategorieProducts />} />
+
 
 
     

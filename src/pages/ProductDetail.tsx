@@ -8,7 +8,7 @@ import { productService } from '../services/product.service';
 interface Product {
   id: number;
   name: string;
-  galleryImages: string[]; // Assurez-vous que ce champ est bien défini
+  galleryImages: string[];
   price: string;
   count?: number;
   description?: string; 
@@ -17,29 +17,20 @@ interface Product {
 const ProductDetailPage: React.FC = () => {
   const { productName } = useParams<{ productName: string }>();
 
-  console.log("Product Name from URL:", productName);
-
   const fetcher = (url: string) => axios.get(url).then(res => res.data);
   const { data: products, error } = useSWR<Product[]>(productService.getProductsUrl(), fetcher);
-
+if(error){
+  console.log(error);
+  
+}
   const [product, setProduct] = useState<Product | null>(null);
   const [quantity, setQuantity] = useState(0);
   const [cartItems, setCartItems] = useState<Product[]>([]);
 
-  if (error) {
-    console.log(error);
-  }
-
   useEffect(() => {
-    console.log("Fetched Products:", products);
-
     if (products && productName) {
       const decodedProductName = decodeURIComponent(productName);
-      console.log("Decoded Product Name:", decodedProductName);
-
       const selectedProduct = products.find(p => p.name === decodedProductName);
-      console.log("Selected Product:", selectedProduct);
-
       setProduct(selectedProduct || null);
 
       if (selectedProduct) {
@@ -50,32 +41,7 @@ const ProductDetailPage: React.FC = () => {
         if (storedCart) setCartItems(JSON.parse(storedCart));
       }
     }
-  }, [products, productName]);
-
-  // Mise en place du slider d'images
-  const [currentImageIndex, setCurrentImageIndex] = useState(0);
-
-  useEffect(() => {
-    if (product?.galleryImages && product.galleryImages.length > 0) {
-      const slideInterval = setInterval(() => {
-        setCurrentImageIndex((prevIndex) => (prevIndex + 1) % product.galleryImages.length);
-      }, 3000);
-
-      return () => clearInterval(slideInterval);
-    }
-  }, [product]);
-
-  const goToNextImage = () => {
-    if (product?.galleryImages) {
-      setCurrentImageIndex((currentImageIndex + 1) % product.galleryImages.length);
-    }
-  };
-
-  const goToPreviousImage = () => {
-    if (product?.galleryImages) {
-      setCurrentImageIndex((currentImageIndex - 1 + (product?.galleryImages.length || 1)) % product.galleryImages.length);
-    }
-  };
+  }, [products, productName, product]);
 
   const updateCart = (newQuantity: number) => {
     if (product) {
@@ -124,30 +90,21 @@ const ProductDetailPage: React.FC = () => {
           </div>
         </Link>
         <div className="bg-white rounded-lg shadow-lg p-4">
-          <div className="relative">
-            {product.galleryImages && product.galleryImages.length > 0 ? (
-              <>
-                <img
-                  src={product.galleryImages[currentImageIndex]}
-                  alt={`${product.name} ${currentImageIndex + 1}`}
-                  className="w-full h-64 object-contain rounded-lg"
-                />
-                <button
-                  onClick={goToPreviousImage}
-                  className="absolute top-1/2 left-2 bg-[#25D366] text-white p-2 rounded-full transform -translate-y-1/2"
-                >
-                  &#10094;
-                </button>
-                <button
-                  onClick={goToNextImage}
-                  className="absolute top-1/2 right-2 bg-[#25D366] text-white p-2 rounded-full transform -translate-y-1/2"
-                >
-                  &#10095;
-                </button>
-              </>
-            ) : (
-              <p>No images available</p>
-            )}
+          <div className="relative flex justify-center">
+            <div className="overflow-x-auto whitespace-nowrap cursor-pointer w-52 space-x-2">
+              {product.galleryImages && product.galleryImages.length > 0 ? (
+                product.galleryImages.map((image, index) => (
+                  <img
+                    key={index}
+                    src={image}
+                    alt={`${product.name} ${index + 1}`}
+                    className="inline-flex  h-64 object-contain rounded-lg"
+                  />
+                ))
+              ) : (
+                <p>No images available</p>
+              )}
+            </div>
           </div>
           <h1 className="text-2xl font-bold mt-4 text-center text-[#25D366]">{product.name}</h1>
           <p className="text-xl font-semibold mt-2 text-center text-gray-600"><span dangerouslySetInnerHTML={{ __html: product.price }} /></p>
