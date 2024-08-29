@@ -62,12 +62,11 @@ const Cart: React.FC = () => {
     <>
       <div className="container mx-auto px-4 mt-8">
         <Link to={"/"}>
-        
-        <div className="mb-6 text-2xl">
-          <IoIosArrowBack />
-        </div>
+          <div className="mb-6 text-2xl">
+            <IoIosArrowBack />
+          </div>
         </Link>
-        <div className="flex justify-between"> 
+        <div className="flex justify-between">
           <h1 className="text-2xl font-bold mb-4">Panier</h1>
           <Link to={"/"}>
             <button className="bg-gray-200 px-2 py-1 mb-2 rounded-sm">
@@ -87,47 +86,53 @@ const Cart: React.FC = () => {
           </>
         ) : (
           <div>
-            {cartItems.map((item, index) => (
-              <div key={index} className="flex items-center justify-between border p-4 mb-4">
-                <div className="flex items-center">
-                  <img
-                    src={item.imageSrc}
-                    alt={item.name}
-                    className="w-24 h-24 object-cover rounded-lg mr-4"
-                  />
-                  <div>
-                    <Link to={"/detail"}>
-                    
-                    <h3 className="lg:text-xl font-semibold">{item.name}</h3>
-                    <p className="text-gray-500 text-sm mt-2"><div dangerouslySetInnerHTML={{ __html: item.price }} /></p>
-                    </Link>
-                    <div className="flex items-center mt-1">
-                      <button
-                        onClick={() => decreaseQuantity(item.name)}
-                        className="bg-gray-200 p-2 rounded-sm text-sm"
-                      >
-                        -
-                      </button>
-                      <p className="text-gray-700 text-sm mx-2">
-                        {getProductQuantity(item.name)}
-                      </p>
-                      <button
-                        onClick={() => increaseQuantity(item.name)}
-                        className="bg-gray-200 p-2 rounded-sm text-sm"
-                      >
-                        +
-                      </button>
+            {cartItems.map((item, index) => {
+              // Transformer le nom pour qu'il affiche seulement les deux premiers mots
+              const truncatedName = item.name.split(' ').slice(0, 2).join(' ');
+
+              return (
+                <div key={index} className="flex items-center justify-between border p-4 mb-4">
+                  <div className="flex items-center">
+                    <img
+                      src={item.imageSrc}
+                      alt={item.name}
+                      className="w-24 h-24 object-cover rounded-lg mr-4"
+                    />
+                    <div>
+                      <Link to={`/detail/${item.name}`}>
+                        <h3 className="lg:text-xl font-semibold">{truncatedName}</h3>
+                        <p className="text-gray-500 text-sm mt-2">
+                          <span dangerouslySetInnerHTML={{ __html: item.price }} />
+                        </p>
+                      </Link>
+                      <div className="flex items-center mt-1">
+                        <button
+                          onClick={() => decreaseQuantity(item.name)}
+                          className="bg-gray-200 p-2 rounded-sm text-sm"
+                        >
+                          -
+                        </button>
+                        <p className="text-gray-700 text-sm mx-2">
+                          {getProductQuantity(item.name)}
+                        </p>
+                        <button
+                          onClick={() => increaseQuantity(item.name)}
+                          className="bg-gray-200 p-2 rounded-sm text-sm"
+                        >
+                          +
+                        </button>
+                      </div>
                     </div>
                   </div>
+                  <button
+                    onClick={() => handleRemoveItem(item.name)}
+                    className="text-red-600 hover:text-red-900 bg-red-200 p-2 rounded-sm ml-4"
+                  >
+                    Retirer
+                  </button>
                 </div>
-                <button
-                  onClick={() => handleRemoveItem(item.name)}
-                  className="text-red-600 hover:text-red-900 bg-red-200 p-2 rounded-sm ml-4"
-                >
-                  Retirer
-                </button>
-              </div>
-            ))}
+              );
+            })}
           </div>
         )}
 
@@ -137,12 +142,11 @@ const Cart: React.FC = () => {
               Passer la commande
             </p>
           ) : (
-           <Link to={"/"}>
-           
-            <p className="mt-3 bg-[#25D366] px-2 py-2 w-auto rounded-sm text-white">
-              Voir le catalogue
-            </p>
-           </Link>
+            <Link to={"/"}>
+              <p className="mt-3 bg-[#25D366] px-2 py-2 w-auto rounded-sm text-white">
+                Voir le catalogue
+              </p>
+            </Link>
           )}
         </div>
       </div>

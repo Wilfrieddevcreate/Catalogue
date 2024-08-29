@@ -76,7 +76,7 @@ const Home: React.FC = () => {
         )}
       </div>
       
-      <div className="flex justify-center container sm:ml-3 md:ml-2 items-center text-justify mb-2 text-sm ">
+      <div className="flex justify-center container sm:ml-3 md:ml-2 items-center text-center mb-2 text-sm ">
         <p>Vous cherchez autre chose? Envoyez un message à ...</p>
       </div>
       <div className="flex justify-center items-center mb-2">
