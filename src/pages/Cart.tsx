@@ -58,17 +58,25 @@ const Cart: React.FC = () => {
     }
   };
 
+  const extractPriceText = (htmlPrice: string): string => {
+    const tempDiv = document.createElement("div");
+    tempDiv.innerHTML = htmlPrice;
+    return tempDiv.textContent || tempDiv.innerText || "";
+  };
+  
   const generateWhatsAppLink = () => {
-    const phoneNumber = "22961790448";
-    let message = "Voici les produits que je souhaite commander:%0A";
-
+    const phoneNumber = "22961790448"; 
+    let message = "Voici les produits que je souhaite commander:";
+  
     cartItems.forEach((item) => {
-      message += `%0A*${item.name}*%0AQuantité: ${item.quantity}%0APrix: ${item.price}%0AImage: ${item.imageSrc}%0A`;
+      const priceText = extractPriceText(item.price);
+      message += `Nom du produit: ${item.name} Prix: ${priceText} Quantité :${getProductQuantity(item.name)} `;
     });
-
+  
     const encodedMessage = encodeURIComponent(message);
     return `https://wa.me/${phoneNumber}?text=${encodedMessage}`;
   };
+  
 
   return (
     <>
@@ -99,7 +107,7 @@ const Cart: React.FC = () => {
         ) : (
           <div>
             {cartItems.map((item, index) => {
-              // Transformer le nom pour qu'il affiche seulement les deux premiers mots
+              // Transforme le nom pour qu'il affiche seulement les deux premiers mots
               const truncatedName = item.name.split(" ").slice(0, 2).join(" ");
 
               return (

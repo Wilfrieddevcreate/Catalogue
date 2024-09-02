@@ -33,7 +33,9 @@ const ProductList: React.FC<ProductListProps> = ({ products, updateCartCount }) 
             {products
               .filter(product => product.category === category)
               .map((product, index) => (
-                <Suspense key={index} fallback={<div>Chargement du produit...</div>}>
+                <Suspense key={index} fallback={<div><div className="flex items-center justify-center my-6">
+                  <div className="animate-spin w-8 h-8 border-4 border-green-200 border-t-transparent rounded-full"></div>
+                </div></div>}>
                   <ProductCard
                     name={product.name}
                     category={product.category}

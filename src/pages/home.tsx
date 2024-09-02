@@ -74,7 +74,9 @@ const Home: React.FC = () => {
           </div>
         )}
         {products && (
-          <Suspense fallback={<div>Chargement des produits...</div>}>
+          <Suspense fallback={<div className="flex items-center justify-center my-6">
+            <div className="animate-spin w-8 h-8 border-4 border-green-200 border-t-transparent rounded-full"></div>
+          </div>}>
             <ProductList products={products} updateCartCount={updateCartCount} />
           </Suspense>
         )}
