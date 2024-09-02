@@ -85,7 +85,7 @@ const Home: React.FC = () => {
       </div>
       <div className="flex justify-center items-center mb-2">
         <a
-          href="https://wa.me/22961790448?text=Bonjour,%20je%20suis%20intéressé%20par%20le%20produit%20T-shirt%20Cool%20à%2020€.%20Voici%20l'image%20du%20produit:%20https://example.com/images/tshirt-cool.jpg"
+          href="https://wa.me/22961790448"
           target="_blank"
           rel="noopener noreferrer"
         >

@@ -14,20 +14,20 @@ const Cart: React.FC = () => {
   const [cartItems, setCartItems] = useState<Product[]>([]);
 
   useEffect(() => {
-    const items = JSON.parse(localStorage.getItem('cart') || '[]');
+    const items = JSON.parse(localStorage.getItem("cart") || "[]");
     setCartItems(items);
   }, []);
 
   const handleRemoveItem = (name: string) => {
-    const updatedItems = cartItems.filter(item => item.name !== name);
+    const updatedItems = cartItems.filter((item) => item.name !== name);
     setCartItems(updatedItems);
-    localStorage.setItem('cart', JSON.stringify(updatedItems));
+    localStorage.setItem("cart", JSON.stringify(updatedItems));
 
     localStorage.removeItem(`product-${name}`);
   };
 
   const getProductQuantity = (name: string): number => {
-    return parseInt(localStorage.getItem(`product-${name}`) || '0', 10);
+    return parseInt(localStorage.getItem(`product-${name}`) || "0", 10);
   };
 
   const increaseQuantity = (name: string) => {
@@ -35,7 +35,7 @@ const Cart: React.FC = () => {
     const newQuantity = currentQuantity + 1;
     localStorage.setItem(`product-${name}`, newQuantity.toString());
 
-    const updatedItems = cartItems.map(item =>
+    const updatedItems = cartItems.map((item) =>
       item.name === name ? { ...item, quantity: newQuantity } : item
     );
     setCartItems(updatedItems);
@@ -50,12 +50,24 @@ const Cart: React.FC = () => {
       if (newQuantity === 0) {
         handleRemoveItem(name);
       } else {
-        const updatedItems = cartItems.map(item =>
+        const updatedItems = cartItems.map((item) =>
           item.name === name ? { ...item, quantity: newQuantity } : item
         );
         setCartItems(updatedItems);
       }
     }
+  };
+
+  const generateWhatsAppLink = () => {
+    const phoneNumber = "22961790448";
+    let message = "Voici les produits que je souhaite commander:%0A";
+
+    cartItems.forEach((item) => {
+      message += `%0A*${item.name}*%0AQuantité: ${item.quantity}%0APrix: ${item.price}%0AImage: ${item.imageSrc}%0A`;
+    });
+
+    const encodedMessage = encodeURIComponent(message);
+    return `https://wa.me/${phoneNumber}?text=${encodedMessage}`;
   };
 
   return (
@@ -88,7 +100,7 @@ const Cart: React.FC = () => {
           <div>
             {cartItems.map((item, index) => {
               // Transformer le nom pour qu'il affiche seulement les deux premiers mots
-              const truncatedName = item.name.split(' ').slice(0, 2).join(' ');
+              const truncatedName = item.name.split(" ").slice(0, 2).join(" ");
 
               return (
                 <div key={index} className="flex items-center justify-between border p-4 mb-4">
@@ -138,9 +150,11 @@ const Cart: React.FC = () => {
 
         <div className="flex justify-center">
           {cartItems.length > 0 ? (
-            <p className="mt-3 bg-[#25D366] px-2 py-2 w-auto rounded-sm text-white">
-              Passer la commande
-            </p>
+            <a href={generateWhatsAppLink()} target="_blank" rel="noopener noreferrer">
+              <p className="mt-3 bg-[#25D366] px-2 py-2 w-auto rounded-sm text-white">
+                Passer la commande
+              </p>
+            </a>
           ) : (
             <Link to={"/"}>
               <p className="mt-3 bg-[#25D366] px-2 py-2 w-auto rounded-sm text-white">
