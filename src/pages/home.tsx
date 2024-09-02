@@ -1,12 +1,12 @@
-// src/pages/Home.tsx
+import React, { useState, useEffect, Suspense, lazy } from 'react';
+import Header from '../components/Header';
+import { Link } from 'react-router-dom';
+import useSWR from 'swr';
+import axios from 'axios';
+import { productService } from '../services/product.service';
 
-import React, { useState, useEffect } from "react";
-import ProductList from "../components/ProductList";
-import Header from "../components/Header";
-import { Link } from "react-router-dom";
-import useSWR from "swr";
-import axios from "axios";
-import { productService } from "../services/product.service";
+// Chargement paresseux de ProductList
+const ProductList = lazy(() => import('../components/ProductList'));
 
 interface Product {
   name: string;
@@ -63,33 +63,37 @@ const Home: React.FC = () => {
 
       {/* Section des produits */}
       <div>
-        {!products && !error && <>
+        {!products && !error && (
           <div className="flex items-center justify-center my-6">
-          <div className="animate-spin w-8 h-8 border-4 border-green-200 border-t-transparent rounded-full"></div>
-        </div>
-        </>}
-        {error && <>
-        <div className="flex items-center justify-center my-6"> <p>Erreur lors de la récupération des produits</p></div>
-        </>}
+            <div className="animate-spin w-8 h-8 border-4 border-green-200 border-t-transparent rounded-full"></div>
+          </div>
+        )}
+        {error && (
+          <div className="flex items-center justify-center my-6">
+            <p>Erreur lors de la récupération des produits</p>
+          </div>
+        )}
         {products && (
-          <ProductList products={products} updateCartCount={updateCartCount} />
+          <Suspense fallback={<div>Chargement des produits...</div>}>
+            <ProductList products={products} updateCartCount={updateCartCount} />
+          </Suspense>
         )}
       </div>
-      
-      <div className="flex justify-center container sm:ml-6 md:ml-5 items-center text-center mb-2 text-sm ">
+
+      <div className="flex justify-center container sm:ml-6 md:ml-5 items-center text-center mb-2 text-sm">
         <p>Vous cherchez autre chose? Envoyez un message à ...</p>
       </div>
       <div className="flex justify-center items-center mb-2">
-  <a
-    href="https://wa.me/22961790448"
-    target="_blank" 
-    rel="noopener noreferrer"
-  >
-    <button className="bg-[#25D366] text-white px-3 text-sm py-1 rounded-full">
-      Message
-    </button>
-  </a>
-</div>
+        <a
+          href="https://wa.me/22961790448?text=Bonjour,%20je%20suis%20intéressé%20par%20le%20produit%20T-shirt%20Cool%20à%2020€.%20Voici%20l'image%20du%20produit:%20https://example.com/images/tshirt-cool.jpg"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          <button className="bg-[#25D366] text-white px-3 text-sm py-1 rounded-full">
+            Message
+          </button>
+        </a>
+      </div>
 
       {/* Voir le panier Button */}
       {cartCount > 0 && (
