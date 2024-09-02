@@ -83,9 +83,9 @@ const Home: React.FC = () => {
       </div>
 
       <div className="flex justify-center container sm:ml-6 md:ml-5 items-center text-center mb-2 text-sm">
-        <p>Vous cherchez autre chose? Envoyez un message à ...</p>
+        <p>Vous cherchez autre chose? Envoyez un message à ShowRoom Costume</p>
       </div>
-      <div className="flex justify-center items-center mb-2">
+      <div className="flex justify-center items-center mb-4">
         <a
           href="https://wa.me/22961790448"
           target="_blank"
