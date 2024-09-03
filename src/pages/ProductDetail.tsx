@@ -9,39 +9,43 @@ interface Product {
   id: number;
   name: string;
   galleryImages: string[];
+  imageSrc: string;  // Assure-toi d'avoir `imageSrc` dans l'interface
   price: string;
   count?: number;
   description?: string; 
+  category:string
 }
 
 const ProductDetailPage: React.FC = () => {
-  const { productName } = useParams<{ productName: string }>();
-
+  const { productName, category } = useParams<{ productName: string; category: string }>();
   const fetcher = (url: string) => axios.get(url).then(res => res.data);
   const { data: products, error } = useSWR<Product[]>(productService.getProductsUrl(), fetcher);
-if(error){
-  console.log(error);
-  
-}
+
+  if(error){
+    console.log(error);
+  }
+
   const [product, setProduct] = useState<Product | null>(null);
   const [quantity, setQuantity] = useState(0);
   const [cartItems, setCartItems] = useState<Product[]>([]);
 
   useEffect(() => {
-    if (products && productName) {
+    if (products && productName && category) {
       const decodedProductName = decodeURIComponent(productName);
-      const selectedProduct = products.find(p => p.name === decodedProductName);
+      const decodedCategory = decodeURIComponent(category);
+      
+      const selectedProduct = products.find(p => p.name === decodedProductName && p.category === decodedCategory);
       setProduct(selectedProduct || null);
-
+  
       if (selectedProduct) {
         const savedQuantity = parseInt(localStorage.getItem(`product-${selectedProduct.name}`) || '0', 10);
         if (savedQuantity > 0) setQuantity(savedQuantity);
-
+  
         const storedCart = localStorage.getItem('cart');
         if (storedCart) setCartItems(JSON.parse(storedCart));
       }
     }
-  }, [products, productName, product]);
+  }, [products, productName, category]);
 
   const updateCart = (newQuantity: number) => {
     if (product) {
@@ -83,33 +87,29 @@ if(error){
     <div className="animate-spin w-8 h-8 border-4 border-green-200 border-t-transparent rounded-full"></div>
   </div>);
 
+  // Combine imageSrc and galleryImages
+  const allImages = [product.imageSrc, ...product.galleryImages];
+
   return (
     <div className="min-h-screen bg-gray-100">
       <div className='container mx-auto px-4 py-6'>
         <div className="relative">
           <Link to={"/"}>
-            <div className="absolute top-0 left-0 text-2xl text-[#25D366] bg-white flex items-center p-4">
+          <div className="absolute top-0 left-0 text-xl text-[#25D366] bg-white flex items-center p-4">
               <IoIosArrowBack className="mr-2" />
             </div>
           </Link>
           <div className="bg-white rounded-lg shadow-lg p-4">
             <div className="relative flex justify-center">
               <div className="overflow-x-auto whitespace-nowrap cursor-pointer space-x-2">
-                {product.galleryImages && product.galleryImages.length > 0 ? (
-                  product.galleryImages.map((image, index) => ( <>
-                  
+                {allImages.length > 0 ? (
+                  allImages.map((image, index) => (
                     <img
                       key={index}
                       src={image}
                       alt={`${product.name} ${index + 1}`}
                       className="inline-flex w-full h-auto object-contain rounded-lg"
                     />
-                    <Link to="/">
-                    <div className="absolute top-4 left-4 bg-green-500 text-white rounded-full p-2 flex items-center justify-center">
-                      <IoIosArrowBack className="text-2xl" />
-                    </div>
-                  </Link>
-                  </>
                   ))
                 ) : (
                   <p>No images available</p>
@@ -117,8 +117,10 @@ if(error){
               </div>
             </div>
             <h1 className="text-2xl font-bold mt-4 text-center text-[#25D366]">{product.name}</h1>
-            <p className="text-xl font-semibold mt-2 text-center text-gray-600"><span dangerouslySetInnerHTML={{ __html: product.price }} /></p>
-            <p className="text-gray-800 text-center mt-2">{product.description || 'No description available'}</p>
+<p className="text-xl font-semibold mt-2 text-center text-gray-600">{category}</p>  {/* Afficher la catégorie */}
+<p className="text-xl font-semibold mt-2 text-center text-gray-600"><span dangerouslySetInnerHTML={{ __html: product.price }} /></p>
+<p className="text-gray-800 text-center mt-2">{product.description || 'No description available'}</p>
+
 
             <div className="flex justify-center items-center mt-6">
               <button

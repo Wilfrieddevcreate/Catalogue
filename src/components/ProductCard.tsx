@@ -45,13 +45,13 @@ const ProductCard: React.FC<ProductCardProps> = ({ name, category, imageSrc, pri
   return (
     <div className="flex items-center justify-between border p-4">
       <div className="flex items-center">
-        <Link to={`/detail/${name}`} className="flex items-center">
-          <img src={imageSrc} alt={name} className="w-24 h-24 object-cover rounded-lg mr-4" />
-          <div>
-            <h3 className="text-xl font-semibold">{truncatedName}</h3>
-            <p className="text-gray-500 mt-2"><span dangerouslySetInnerHTML={{ __html: price }} /></p>
-          </div>
-        </Link>
+      <Link to={`/detail/${encodeURIComponent(name)}/${encodeURIComponent(category)}`} className="flex items-center">
+  <img src={imageSrc} alt={name} className="w-24 h-24 object-cover rounded-lg mr-4" />
+  <div>
+    <h3 className="text-xl font-semibold">{truncatedName}</h3>
+    <p className="text-gray-500 mt-2"><span dangerouslySetInnerHTML={{ __html: price }} /></p>
+  </div>
+</Link>
       </div>
 
       <div className="flex items-center">
