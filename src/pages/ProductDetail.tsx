@@ -92,7 +92,7 @@ const ProductDetailPage: React.FC = () => {
         if (navigator.share) {
           await navigator.share({
             title: product.name,
-            text: product.description || 'Pas de description disponible',
+            text: product.description || product.name,
             url: shareUrl,
           });
           console.log('Partager réussi');
