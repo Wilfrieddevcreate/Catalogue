@@ -128,7 +128,7 @@ const ProductDetailPage: React.FC = () => {
         </a>
             </div>
           <p className="text-xl font-semibold mt-2 text-center text-gray-600">{category}</p>  {/* Afficher la catégorie */}
-          <Link to={"share"}>
+          <Link to={"/share"}>
               
               <button>partage</button>
                       </Link>
