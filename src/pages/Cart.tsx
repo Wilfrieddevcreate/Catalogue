@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { IoIosArrowBack } from "react-icons/io";
+import { FaWhatsapp } from "react-icons/fa";
 
 interface Product {
   name: string;
@@ -159,9 +160,10 @@ const Cart: React.FC = () => {
         <div className="flex justify-center">
           {cartItems.length > 0 ? (
             <a href={generateWhatsAppLink()} target="_blank" rel="noopener noreferrer">
-              <p className="mt-3 bg-[#25D366] px-2 py-2 w-auto rounded-sm text-white">
-                Passer la commande
-              </p>
+              <button className="bg-[#25D366] text-white px-3 text-sm py-2 rounded-sm flex items-center space-x-2">
+                <FaWhatsapp />
+                <span>Passer la commande</span>
+              </button>
             </a>
           ) : (
             <Link to={"/"}>

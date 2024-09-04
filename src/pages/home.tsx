@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import useSWR from 'swr';
 import axios from 'axios';
 import { productService } from '../services/product.service';
-
+import { FaWhatsapp } from "react-icons/fa";
 // Chargement paresseux de ProductList
 const ProductList = lazy(() => import('../components/ProductList'));
 
@@ -91,9 +91,11 @@ const Home: React.FC = () => {
           target="_blank"
           rel="noopener noreferrer"
         >
-          <button className="bg-[#25D366] text-white px-3 text-sm py-1 rounded-full">
-            Message
-          </button>
+         <button className="bg-[#25D366] text-white px-3 text-sm py-1 rounded-full flex items-center space-x-2">
+  <FaWhatsapp />
+  <span>Message</span>
+</button>
+
         </a>
       </div>
 
