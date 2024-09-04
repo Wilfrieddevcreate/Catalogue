@@ -2,6 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { FaShoppingCart } from "react-icons/fa";
 import Logo from "../assets/logo.jpg";
+import { FaWhatsapp } from "react-icons/fa";
 
 interface HeaderProps {
   cartCount: number;
@@ -13,7 +14,17 @@ const Header: React.FC<HeaderProps> = ({ cartCount }) => {
       <div className="bg-[#25D366] fixed top-0 left-0 right-0 z-10">
         <div className="container mx-auto flex items-center justify-between p-4 md:p-6 text-white">
           {/* Espace vide pour centrer le texte */}
-          <div className="w-1/3"></div>
+          <div className="w-1/3 text-2xl">
+          <a
+          href="https://wa.me/22961790448"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+
+          <FaWhatsapp />
+        </a>
+          
+          </div>
           
           {/* Titre centré */}
           <Link to={"/"} className="text-lg md:text-xl font-bold w-1/3 text-center">

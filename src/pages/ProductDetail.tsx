@@ -4,6 +4,7 @@ import { IoIosArrowBack } from "react-icons/io";
 import useSWR from "swr";
 import axios from "axios";
 import { productService } from '../services/product.service';
+import { FaWhatsapp } from "react-icons/fa";
 
 interface Product {
   id: number;
@@ -117,9 +118,18 @@ const ProductDetailPage: React.FC = () => {
               </div>
             </div>
             <h1 className="text-2xl font-bold mt-4 text-center text-[#25D366]">{product.name}</h1>
-<p className="text-xl font-semibold mt-2 text-center text-gray-600">{category}</p>  {/* Afficher la catégorie */}
-<p className="text-xl font-semibold mt-2 text-center text-gray-600"><span dangerouslySetInnerHTML={{ __html: product.price }} /></p>
-<p className="text-gray-800 text-center mt-2">{product.description || 'No description available'}</p>
+            <div className='flex justify-center items-center my-6'>
+            <a
+          href="https://wa.me/22961790448"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+              <button className='flex items-center space-x-3 py-3 px-6 rounded-full border border-[#25D366]'><FaWhatsapp />  Envoyez un message à l'entreprise</button>
+        </a>
+            </div>
+          <p className="text-xl font-semibold mt-2 text-center text-gray-600">{category}</p>  {/* Afficher la catégorie */}
+          <p className="text-xl font-semibold mt-2 text-center text-gray-600"><span dangerouslySetInnerHTML={{ __html: product.price }} /></p>
+          <p className="text-gray-800 text-center mt-2">{product.description || 'No description available'}</p>
 
 
             <div className="flex justify-center items-center mt-6">
