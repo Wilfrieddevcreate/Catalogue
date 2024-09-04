@@ -128,6 +128,10 @@ const ProductDetailPage: React.FC = () => {
         </a>
             </div>
           <p className="text-xl font-semibold mt-2 text-center text-gray-600">{category}</p>  {/* Afficher la catégorie */}
+          <Link to={"share"}>
+              
+              <button>partage</button>
+                      </Link>
           <p className="text-xl font-semibold mt-2 text-center text-gray-600"><span dangerouslySetInnerHTML={{ __html: product.price }} /></p>
           <p className="text-gray-800 text-center mt-2">{product.description || 'No description available'}</p>
 
@@ -155,6 +159,8 @@ const ProductDetailPage: React.FC = () => {
                   Voir le panier ({cartItems.length})
                 </button>
               </Link>
+            
+
             </div>
           </div>
         </div>
