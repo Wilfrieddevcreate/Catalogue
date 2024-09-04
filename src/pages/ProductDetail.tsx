@@ -10,11 +10,11 @@ interface Product {
   id: number;
   name: string;
   galleryImages: string[];
-  imageSrc: string;  // Assure-toi d'avoir `imageSrc` dans l'interface
+  imageSrc: string;
   price: string;
   count?: number;
   description?: string; 
-  category:string
+  category:string;
 }
 
 const ProductDetailPage: React.FC = () => {
@@ -84,11 +84,33 @@ const ProductDetailPage: React.FC = () => {
     }
   };
 
-  if (!product) return(<div className="flex items-center justify-center my-6">
-    <div className="animate-spin w-8 h-8 border-4 border-green-200 border-t-transparent rounded-full"></div>
-  </div>);
+  const handleShare = async () => {
+    if (product) {
+      try {
+        const shareUrl = `${window.location.origin}/detail/${product.id}`;
 
-  // Combine imageSrc and galleryImages
+        if (navigator.share) {
+          await navigator.share({
+            title: product.name,
+            text: product.description || 'Pas de description disponible',
+            url: shareUrl,
+          });
+          console.log('Partager réussi');
+        } else {
+          alert('La fonctionnalité de partage n\'est pas supportée sur ce navigateur.');
+        }
+      } catch (error) {
+        console.error('Erreur lors du partage:', error);
+      }
+    }
+  };
+
+  if (!product) return(
+    <div className="flex items-center justify-center my-6">
+      <div className="animate-spin w-8 h-8 border-4 border-green-200 border-t-transparent rounded-full"></div>
+    </div>
+  );
+
   const allImages = [product.imageSrc, ...product.galleryImages];
 
   return (
@@ -96,7 +118,7 @@ const ProductDetailPage: React.FC = () => {
       <div className='container mx-auto px-4 py-6'>
         <div className="relative">
           <Link to={"/"}>
-          <div className="absolute top-0 left-0 text-xl text-[#25D366] bg-white flex items-center p-4">
+            <div className="absolute top-0 left-0 text-xl text-[#25D366] bg-white flex items-center p-4">
               <IoIosArrowBack className="mr-2" />
             </div>
           </Link>
@@ -119,22 +141,17 @@ const ProductDetailPage: React.FC = () => {
             </div>
             <h1 className="text-2xl font-bold mt-4 text-center text-[#25D366]">{product.name}</h1>
             <div className='flex justify-center items-center my-6'>
-            <a
-          href="https://wa.me/22961790448"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-              <button className='flex items-center space-x-3 py-3 px-6 rounded-full border border-[#25D366]'><FaWhatsapp />  Envoyez un message à l'entreprise</button>
-        </a>
+              <a
+                href="https://wa.me/22961790448"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <button className='flex items-center space-x-3 py-3 px-6 rounded-full border border-[#25D366]'><FaWhatsapp />  Envoyez un message à l'entreprise</button>
+              </a>
             </div>
-          <p className="text-xl font-semibold mt-2 text-center text-gray-600">{category}</p>  {/* Afficher la catégorie */}
-          <Link to={"/share"}>
-              
-              <button>partage</button>
-                      </Link>
-          <p className="text-xl font-semibold mt-2 text-center text-gray-600"><span dangerouslySetInnerHTML={{ __html: product.price }} /></p>
-          <p className="text-gray-800 text-center mt-2">{product.description || 'No description available'}</p>
-
+            <p className="text-xl font-semibold mt-2 text-center text-gray-600">{category}</p>
+            <p className="text-xl font-semibold mt-2 text-center text-gray-600"><span dangerouslySetInnerHTML={{ __html: product.price }} /></p>
+            <p className="text-gray-800 text-center mt-2">{product.description || 'No description available'}</p>
 
             <div className="flex justify-center items-center mt-6">
               <button
@@ -152,15 +169,18 @@ const ProductDetailPage: React.FC = () => {
                 +
               </button>
             </div>
-
+            <div className='flex justify-center items-center mt-6'>
+              <button onClick={handleShare} className='space-x-3 py-3 px-6 rounded-full border border-[#25D366]'>
+                Partager
+              </button>
+            </div>
+            
             <div className="flex justify-center mt-6">
               <Link to={"/panier"}>
                 <button className="bg-[#25D366] py-3 px-6 rounded-lg text-white font-semibold hover:bg-green-800">
                   Voir le panier ({cartItems.length})
                 </button>
               </Link>
-            
-
             </div>
           </div>
         </div>
