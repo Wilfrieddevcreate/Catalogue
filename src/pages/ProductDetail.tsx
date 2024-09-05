@@ -146,7 +146,7 @@ const ProductDetailPage: React.FC = () => {
                 target="_blank"
                 rel="noopener noreferrer"
               >
-                <button className='flex items-center space-x-3 py-3 px-6 rounded-full border border-[#25D366]'><FaWhatsapp />  Envoyez un message à l'entreprise</button>
+                <button className='flex items-center space-x-3 py-3 px-6 rounded-full text-white bg-[#25D366]'><FaWhatsapp />  <span>Envoyez un message à l'entreprise</span></button>
               </a>
             </div>
             <p className="text-xl font-semibold mt-2 text-center text-gray-600">{category}</p>

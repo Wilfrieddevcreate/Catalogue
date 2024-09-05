@@ -21,16 +21,16 @@ const Header: React.FC<HeaderProps> = ({ cartCount }) => {
           rel="noopener noreferrer"
         >
 
-          <FaWhatsapp />
+          
         </a>
           
           </div>
           
-          {/* Titre centré */}
-          <Link to={"/"} className="text-lg md:text-xl font-bold w-1/3 text-center">
-            Catalogue WhatsApp
-          </Link>
           
+          <Link to={"/"} className="text-lg md:text-xl font-bold w-1/3 text-center flex items-center justify-center space-x-3">
+  <FaWhatsapp />
+  <span>Catalogue WhatsApp</span>
+</Link>          
           {/* Icône du panier alignée à droite */}
           <div className="w-1/3 flex justify-end">
             <Link to={"/panier"} className="flex items-center text-2xl">
@@ -45,7 +45,7 @@ const Header: React.FC<HeaderProps> = ({ cartCount }) => {
         </div>
       </div>
 
-      <div className="relative mt-8">
+      <div className="relative mt-20">
         <div className="w-full h-32 md:h-48 bg-gray-400 object-cover opacity-100">
           <img src={Logo} alt="Notre Logo" className="h-48 w-full" />
         </div>
