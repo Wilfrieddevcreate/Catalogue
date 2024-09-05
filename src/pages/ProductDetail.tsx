@@ -177,7 +177,7 @@ const ProductDetailPage: React.FC = () => {
             
             <div className="flex justify-center mt-6">
               <Link to={"/panier"}>
-                <button className="bg-[#25D366] py-3 px-6 rounded-lg text-white font-semibold hover:bg-green-800">
+                <button className="bg-[#25D366] py-3 px-6 rounded-lg text-white font-semibold">
                   Voir le panier ({cartItems.length})
                 </button>
               </Link>
