@@ -3,11 +3,30 @@ import { Link } from "react-router-dom";
 import { FaShoppingCart } from "react-icons/fa";
 import Logo from "../assets/logo.jpg";
 import { FaWhatsapp } from "react-icons/fa";
+import { CgMoreVerticalAlt } from "react-icons/cg";
 
 interface HeaderProps {
   cartCount: number;
 }
+const handleShare = async () => {
+    try {
+      const shareUrl = `${window.location.origin}`;
 
+      if (navigator.share) {
+        await navigator.share({
+          title: "Costumes Élegants pour Toutes Occasions",
+          text: "Découvrez notre collection de costumes élégants pour hommes, alliant style et confort. Parfaits pour les événements professionnels, les mariages ou une soirée spéciale, nos costumes sont disponibles en différentes tailles et couleurs pour s’adapter à toutes vos préférences. Commandez maintenant et bénéficiez de conseils personnalisés pour un look impeccable.",
+          url: shareUrl,
+        });
+        console.log('Partager réussi');
+      } else {
+        alert('La fonctionnalité de partage n\'est pas supportée sur ce navigateur.');
+      }
+    } catch (error) {
+      console.error('Erreur lors du partage:', error);
+    }
+  
+};
 const Header: React.FC<HeaderProps> = ({ cartCount }) => {
   return (
     <>
@@ -15,21 +34,14 @@ const Header: React.FC<HeaderProps> = ({ cartCount }) => {
         <div className="container mx-auto flex items-center justify-between p-4 md:p-6 text-white">
           {/* Espace vide pour centrer le texte */}
           <div className="w-1/3 text-2xl">
-          <a
-          href="https://wa.me/22961790448"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-
           
-        </a>
           
           </div>
           
           
           <Link to={"/"} className="text-lg md:text-xl font-bold w-1/3 text-center flex items-center justify-center space-x-3">
   
-  <span className="text-lg"><FaWhatsapp /></span>
+  <span className="text-2xl"><FaWhatsapp /></span>
   <span>Catalogue WhatsApp</span>
 </Link>          
           {/* Icône du panier alignée à droite */}
@@ -41,7 +53,9 @@ const Header: React.FC<HeaderProps> = ({ cartCount }) => {
                 </span>
               )}
               <FaShoppingCart />
-            </Link>
+            </Link> 
+            <span className="ml-4 text-2xl mt-1"><button onClick={handleShare}><CgMoreVerticalAlt /></button></span>
+            
           </div>
         </div>
       </div>
