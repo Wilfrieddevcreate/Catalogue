@@ -54,7 +54,7 @@ const Header: React.FC<HeaderProps> = ({ cartCount }) => {
               )}
               <FaShoppingCart />
             </Link> 
-            <span className="ml-2 text-2xl mt-1"><button onClick={handleShare}><CgMoreVerticalAlt /></button></span>
+            <span className="ml-2 text-2xl mt-2"><button onClick={handleShare}><CgMoreVerticalAlt /></button></span>
             
           </div>
         </div>
