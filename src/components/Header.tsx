@@ -28,7 +28,8 @@ const Header: React.FC<HeaderProps> = ({ cartCount }) => {
           
           
           <Link to={"/"} className="text-lg md:text-xl font-bold w-1/3 text-center flex items-center justify-center space-x-3">
-  <FaWhatsapp />
+  
+  <span className="text-lg"><FaWhatsapp /></span>
   <span>Catalogue WhatsApp</span>
 </Link>          
           {/* Icône du panier alignée à droite */}
