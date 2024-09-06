@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { FaShoppingCart } from "react-icons/fa";
 import Logo from "../assets/logo.jpg";
 import { FaWhatsapp } from "react-icons/fa";
-import { CgMoreVerticalAlt } from "react-icons/cg";
+import { FaShareNodes } from "react-icons/fa6";
 
 interface HeaderProps {
   cartCount: number;
@@ -34,6 +34,7 @@ const Header: React.FC<HeaderProps> = ({ cartCount }) => {
         <div className="container mx-auto flex items-center justify-between p-4 md:p-6 text-white">
           {/* Espace vide pour centrer le texte */}
           <div className="w-1/3 text-2xl">
+  <span className="text-4xl"><FaWhatsapp /></span>
           
           
           </div>
@@ -41,7 +42,6 @@ const Header: React.FC<HeaderProps> = ({ cartCount }) => {
           
           <Link to={"/"} className="text-lg md:text-xl font-bold w-1/3 text-center flex items-center justify-center space-x-3">
   
-  <span className="text-2xl"><FaWhatsapp /></span>
   <span>Catalogue WhatsApp</span>
 </Link>          
           {/* Icône du panier alignée à droite */}
@@ -54,7 +54,7 @@ const Header: React.FC<HeaderProps> = ({ cartCount }) => {
               )}
               <FaShoppingCart />
             </Link> 
-            <span className="ml-2 text-2xl mt-2"><button onClick={handleShare}><CgMoreVerticalAlt /></button></span>
+            <span className="ml-4 text-2xl mt-2"><button onClick={handleShare}><FaShareNodes /></button></span>
             
           </div>
         </div>
