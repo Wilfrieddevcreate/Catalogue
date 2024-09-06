@@ -15,7 +15,7 @@ const handleShare = async () => {
       if (navigator.share) {
         await navigator.share({
           title: "Costumes Élegants pour Toutes Occasions",
-          text: "Découvrez notre collection de costumes élégants pour hommes, alliant style et confort. Parfaits pour les événements professionnels, les mariages ou une soirée spéciale, nos costumes sont disponibles en différentes tailles et couleurs pour s’adapter à toutes vos préférences. Commandez maintenant et bénéficiez de conseils personnalisés pour un look impeccable.",
+          text: "Costumes Élegants pour Toutes Occasions Commandez maintenant et bénéficiez de conseils personnalisés pour un look impeccable.",
           url: shareUrl,
         });
         console.log('Partager réussi');
@@ -54,7 +54,7 @@ const Header: React.FC<HeaderProps> = ({ cartCount }) => {
               )}
               <FaShoppingCart />
             </Link> 
-            <span className="ml-4 text-2xl mt-1"><button onClick={handleShare}><CgMoreVerticalAlt /></button></span>
+            <span className="ml-2 text-2xl mt-1"><button onClick={handleShare}><CgMoreVerticalAlt /></button></span>
             
           </div>
         </div>
