@@ -202,11 +202,15 @@ const Cart: React.FC = () => {
               </div>
             </>
           ) : (
-            <Link to={"/"}>
-              <p className="mt-3 bg-[#25D366] px-2 py-2 w-auto rounded-sm text-white">
-                Voir le catalogue
-              </p>
-            </Link>
+                <>
+                  <div className="flex justify-center">
+                    <Link to={"/"}>
+                      <p className="mt-3 bg-[#25D366] px-2 py-2 w-auto rounded-sm text-white">
+                        Voir le catalogue
+                      </p>
+                    </Link>
+                  </div>
+                </>
           )}
         </div>
       </div>
