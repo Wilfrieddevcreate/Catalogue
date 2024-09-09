@@ -77,7 +77,32 @@ const Cart: React.FC = () => {
     const encodedMessage = encodeURIComponent(message);
     return `https://wa.me/${phoneNumber}?text=${encodedMessage}`;
   };
-  
+
+  const handleShare = async () => {
+    try {
+      let message = "Voici les produits ajoutés dans mon panier :\n\n";
+
+      cartItems.forEach((item) => {
+        const priceText = extractPriceText(item.price);
+        message += `Nom: ${item.name}, Prix: ${priceText}, Quantité: ${getProductQuantity(item.name)}\n`;
+      });
+
+      const shareUrl = `${window.location.origin}`;
+
+      if (navigator.share) {
+        await navigator.share({
+          title: "Mon panier de produits",
+          text: message,
+          url: shareUrl,
+        });
+        console.log('Partager réussi');
+      } else {
+        alert('La fonctionnalité de partage n\'est pas supportée sur ce navigateur.');
+      }
+    } catch (error) {
+      console.error('Erreur lors du partage:', error);
+    }
+  };
 
   return (
     <>
@@ -108,7 +133,6 @@ const Cart: React.FC = () => {
         ) : (
           <div>
             {cartItems.map((item, index) => {
-              // Transforme le nom pour qu'il affiche seulement les deux premiers mots
               const truncatedName = item.name.split(" ").slice(0, 2).join(" ");
 
               return (
@@ -159,19 +183,23 @@ const Cart: React.FC = () => {
 
         <div className="">
           {cartItems.length > 0 ? (
-            <><div className="flex justify-center">
-              
-              <a href={generateWhatsAppLink()} target="_blank" rel="noopener noreferrer">
-              <button className="bg-[#25D366] text-white px-3 text-sm py-2 rounded-sm flex items-center space-x-2">
-                <FaWhatsapp />
-                <span>Passer la commande</span>
-              </button>
-            </a>
+            <>
+              <div className="flex justify-center">
+                <a href={generateWhatsAppLink()} target="_blank" rel="noopener noreferrer">
+                  <button className="bg-[#25D366] text-white px-3 text-sm py-2 rounded-sm flex items-center space-x-2">
+                    <FaWhatsapp />
+                    <span>Passer la commande</span>
+                  </button>
+                </a>
               </div>
-            
-            <div className="mt-12 flex justify-center">
-              <button className="bg-[#25D366] text-white px-3 text-sm py-2 rounded-sm flex items-center space-x-2"><span>Partager</span></button>
-            </div>
+              <div className="mt-12 flex justify-center">
+                <button
+                  onClick={handleShare}
+                  className="bg-[#25D366] text-white px-3 text-sm py-2 rounded-sm flex items-center space-x-2"
+                >
+                  <span>Partager</span>
+                </button>
+              </div>
             </>
           ) : (
             <Link to={"/"}>
