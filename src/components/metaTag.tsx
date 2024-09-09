@@ -1,6 +1,6 @@
 
 import { Helmet } from 'react-helmet-async';
-
+import Logo from "../assets/logo.jpg"
 // You can have more props. In my case, these are enough.
 function MetaTags ({ title = '', description = '', image = '', name = '' }) {
   return (
@@ -17,7 +17,7 @@ function MetaTags ({ title = '', description = '', image = '', name = '' }) {
             {/* OG image tags */}
             <meta property="og:image" content={image} />
             <meta property="og:image:secure_url" content={image} />
-            <meta property="og:image:type" content="image/jpeg" />
+            <meta property="og:image:type" content={Logo} />
             <meta property="og:image:width" content="200" />
             <meta property="og:image:alt" content={`Image of ${title} site`} />
             { /* Twitter tags */ }
