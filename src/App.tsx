@@ -6,24 +6,29 @@ import Cart from "./pages/Cart"
 import ShareButton from "./pages/gesr";
 import ProductDetailPage from "./pages/ProductDetail";
 import CategorieProducts from "./pages/cateogorieProduct";
+import { HelmetProvider } from "react-helmet-async";
 function App() {
 
   return (
+    <><HelmetProvider>
+
     <BrowserRouter>
-    <ScrollToTop />
-    <Routes>
-    <Route path="/" element={<Home />} />
-    <Route path="/panier" element={<Cart />} />
-    <Route path="/share" element={<ShareButton />} />
+        <ScrollToTop />
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/panier" element={<Cart />} />
+          <Route path="/share" element={<ShareButton />} />
 
-    <Route path={`/detail/:productName/:category`} element={<ProductDetailPage />} />
-    <Route path={`/categorie/:categoryName`} element={<CategorieProducts />} />
+          <Route path={`/detail/:productName/:category`} element={<ProductDetailPage />} />
+          <Route path={`/categorie/:categoryName`} element={<CategorieProducts />} />
 
 
 
-    
-    </Routes>
-  </BrowserRouter>
+
+        </Routes>
+      </BrowserRouter>
+    </HelmetProvider>
+      </>
   )
 }
 
