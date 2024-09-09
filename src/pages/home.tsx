@@ -5,8 +5,7 @@ import useSWR from 'swr';
 import axios from 'axios';
 import { productService } from '../services/product.service';
 import { FaWhatsapp } from "react-icons/fa";
-import MetaTags from '../components/metaTag';
-import Logo from "../assets/logo.jpg"
+
 const ProductList = lazy(() => import('../components/ProductList'));
 
 interface Product {
@@ -60,7 +59,7 @@ const Home: React.FC = () => {
 
   return (
     <>
-    <MetaTags title="Home" description="Description de Home" image={Logo} name='Home du dev'/>
+    
       <Header cartCount={cartCount} />
 
       {/* Section des produits */}

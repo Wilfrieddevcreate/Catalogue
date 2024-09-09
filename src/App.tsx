@@ -6,11 +6,11 @@ import Cart from "./pages/Cart"
 import ShareButton from "./pages/gesr";
 import ProductDetailPage from "./pages/ProductDetail";
 import CategorieProducts from "./pages/cateogorieProduct";
-import { HelmetProvider } from "react-helmet-async";
+//import { HelmetProvider } from "react-helmet-async";
 function App() {
 
   return (
-    <><HelmetProvider>
+    <>
 
     <BrowserRouter>
         <ScrollToTop />
@@ -27,7 +27,7 @@ function App() {
 
         </Routes>
       </BrowserRouter>
-    </HelmetProvider>
+    
       </>
   )
 }
