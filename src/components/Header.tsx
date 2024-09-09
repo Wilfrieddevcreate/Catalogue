@@ -62,7 +62,7 @@ const Header: React.FC<HeaderProps> = ({ cartCount }) => {
 
       <div className="relative mt-20">
         <div className="w-full h-32 md:h-48 bg-gray-400 object-cover opacity-100">
-          <img src={Logo} alt="Notre Logo" className="h-48 w-full" />
+          <img src={Logo} alt="ShowRoom Costume" className="h-48 w-full" />
         </div>
         <div className="absolute inset-0 flex items-center justify-center">
           <h1 className="text-white text-2xl md:text-4xl font-bold"></h1>

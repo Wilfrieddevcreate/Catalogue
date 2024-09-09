@@ -157,14 +157,22 @@ const Cart: React.FC = () => {
           </div>
         )}
 
-        <div className="flex justify-center">
+        <div className="">
           {cartItems.length > 0 ? (
-            <a href={generateWhatsAppLink()} target="_blank" rel="noopener noreferrer">
+            <><div className="flex justify-center">
+              
+              <a href={generateWhatsAppLink()} target="_blank" rel="noopener noreferrer">
               <button className="bg-[#25D366] text-white px-3 text-sm py-2 rounded-sm flex items-center space-x-2">
                 <FaWhatsapp />
                 <span>Passer la commande</span>
               </button>
             </a>
+              </div>
+            
+            <div className="mt-12 flex justify-center">
+              <button className="bg-[#25D366] text-white px-3 text-sm py-2 rounded-sm flex items-center space-x-2"><span>Partager</span></button>
+            </div>
+            </>
           ) : (
             <Link to={"/"}>
               <p className="mt-3 bg-[#25D366] px-2 py-2 w-auto rounded-sm text-white">
