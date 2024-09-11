@@ -6,12 +6,8 @@ import Cart from "./pages/Cart"
 import ShareButton from "./pages/gesr";
 import ProductDetailPage from "./pages/ProductDetail";
 import CategorieProducts from "./pages/cateogorieProduct";
-//import { HelmetProvider } from "react-helmet-async";
-import { useEffect } from "react";
 function App() {
-  useEffect(() => {
-    console.log('App mounted');
-  }, []);
+  
   return (
     <>
 
@@ -22,7 +18,7 @@ function App() {
           <Route path="/panier" element={<Cart />} />
           <Route path="/share" element={<ShareButton />} />
 
-          <Route path={`/detail/:productName/:category`} element={<ProductDetailPage />} />
+          <Route path={`/detail/:slug`} element={<ProductDetailPage />} />
           <Route path={`/categorie/:categoryName`} element={<CategorieProducts />} />
 
 

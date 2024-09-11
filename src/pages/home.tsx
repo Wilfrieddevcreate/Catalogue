@@ -13,6 +13,7 @@ interface Product {
   category: string;
   imageSrc: string;
   price: string;
+  slug:string
   count?: number;
 }
 

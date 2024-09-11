@@ -9,6 +9,7 @@ interface Product {
   category: string;
   imageSrc: string;
   price: string;
+  slug: string;
 }
 
 interface ProductListProps {
@@ -41,6 +42,7 @@ const ProductList: React.FC<ProductListProps> = ({ products, updateCartCount }) 
                     category={product.category}
                     imageSrc={product.imageSrc}
                     price={product.price}
+                    slug={product.slug}
                     updateCartCount={updateCartCount}
                   />
                 </Suspense>

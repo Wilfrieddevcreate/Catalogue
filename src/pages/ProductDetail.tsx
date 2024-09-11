@@ -9,20 +9,21 @@ import { FaWhatsapp } from "react-icons/fa";
 interface Product {
   id: number;
   name: string;
+  slug: string;
   galleryImages: string[];
   imageSrc: string;
   price: string;
   count?: number;
   description?: string; 
-  category:string;
+  category: string;
 }
 
 const ProductDetailPage: React.FC = () => {
-  const { productName, category } = useParams<{ productName: string; category: string }>();
+  const { slug } = useParams<{ slug: string }>();
   const fetcher = (url: string) => axios.get(url).then(res => res.data);
   const { data: products, error } = useSWR<Product[]>(productService.getProductsUrl(), fetcher);
 
-  if(error){
+  if (error) {
     console.log(error);
   }
 
@@ -31,22 +32,21 @@ const ProductDetailPage: React.FC = () => {
   const [cartItems, setCartItems] = useState<Product[]>([]);
 
   useEffect(() => {
-    if (products && productName && category) {
-      const decodedProductName = decodeURIComponent(productName);
-      const decodedCategory = decodeURIComponent(category);
-      
-      const selectedProduct = products.find(p => p.name === decodedProductName && p.category === decodedCategory);
+    if (products && slug) {
+      const decodedSlug = decodeURIComponent(slug);
+
+      const selectedProduct = products.find(p => p.slug === decodedSlug);
       setProduct(selectedProduct || null);
-  
+
       if (selectedProduct) {
         const savedQuantity = parseInt(localStorage.getItem(`product-${selectedProduct.name}`) || '0', 10);
         if (savedQuantity > 0) setQuantity(savedQuantity);
-  
+
         const storedCart = localStorage.getItem('cart');
         if (storedCart) setCartItems(JSON.parse(storedCart));
       }
     }
-  }, [products, productName, category]);
+  }, [products, slug]);
 
   const updateCart = (newQuantity: number) => {
     if (product) {
@@ -87,7 +87,7 @@ const ProductDetailPage: React.FC = () => {
   const handleShare = async () => {
     if (product) {
       try {
-        const shareUrl = `${window.location.origin}/detail/${encodeURIComponent(product.name)}/${encodeURIComponent(product.category)}`;
+        const shareUrl = `${window.location.origin}/detail/${encodeURIComponent(product.slug)}`;
 
         if (navigator.share) {
           await navigator.share({
@@ -105,7 +105,7 @@ const ProductDetailPage: React.FC = () => {
     }
   };
 
-  if (!product) return(
+  if (!product) return (
     <div className="flex items-center justify-center my-6">
       <div className="animate-spin w-8 h-8 border-4 border-green-200 border-t-transparent rounded-full"></div>
     </div>
@@ -146,10 +146,10 @@ const ProductDetailPage: React.FC = () => {
                 target="_blank"
                 rel="noopener noreferrer"
               >
-                <button className='flex items-center space-x-3 py-3 px-6 rounded-full text-white bg-[#25D366]'><FaWhatsapp  className='text-2xl'/>  <span>Envoyez un message à l'entreprise</span></button>
+                <button className='flex items-center space-x-3 py-3 px-6 rounded-full text-white bg-[#25D366]'><FaWhatsapp className='text-2xl'/>  <span>Envoyez un message à l'entreprise</span></button>
               </a>
             </div>
-            <p className="text-xl font-semibold mt-2 text-center text-gray-600">{category}</p>
+            <p className="text-xl font-semibold mt-2 text-center text-gray-600">{product.category}</p>
             <p className="text-xl font-semibold mt-2 text-center text-gray-600"><span dangerouslySetInnerHTML={{ __html: product.price }} /></p>
             <p className="text-gray-800 text-center mt-2">{product.description || 'No description available'}</p>
 
@@ -170,7 +170,7 @@ const ProductDetailPage: React.FC = () => {
               </button>
             </div>
             <div className='flex justify-center items-center mt-6'>
-              <button onClick={handleShare} className='space-x-3 py-3 px-6 rounded-full border border-[#25D366]'>
+              <button onClick={handleShare} className='space-x-3 py-3 px-6 text-white rounded-full border bg-[#25D366]'>
                 Partager
               </button>
             </div>

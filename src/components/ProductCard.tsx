@@ -7,6 +7,7 @@ interface Product {
   category: string;
   imageSrc: string;
   price: string;
+  slug: string;
 }
 
 interface ProductCardProps {
@@ -14,10 +15,11 @@ interface ProductCardProps {
   category: string;
   imageSrc: string;
   price: string;
+  slug: string;
   updateCartCount: (product: Product, change: number) => void;
 }
 
-const ProductCard: React.FC<ProductCardProps> = ({ name, category, imageSrc, price, updateCartCount }) => {
+const ProductCard: React.FC<ProductCardProps> = ({ name, category, imageSrc, price, slug, updateCartCount }) => {
   const [count, setCount] = useState(0);
 
   useEffect(() => {
@@ -28,14 +30,14 @@ const ProductCard: React.FC<ProductCardProps> = ({ name, category, imageSrc, pri
   const handleAddClick = () => {
     const newCount = count + 1;
     setCount(newCount);
-    updateCartCount({ name, category, imageSrc, price }, 1);
+    updateCartCount({ name, category, imageSrc, price ,slug}, 1);
   };
 
   const handleRemoveClick = () => {
     if (count > 0) {
       const newCount = count - 1;
       setCount(newCount);
-      updateCartCount({ name, category, imageSrc, price }, -1);
+      updateCartCount({ name, category, imageSrc, price,slug }, -1);
     }
   };
 
@@ -45,7 +47,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ name, category, imageSrc, pri
   return (
     <div className="flex items-center justify-between border p-4">
       <div className="flex items-center">
-      <Link to={`/detail/${encodeURIComponent(name)}/${encodeURIComponent(category)}`} className="flex items-center">
+      <Link to={`/detail/${slug}`} className="flex items-center">
   <img src={imageSrc} alt={name} className="w-24 h-24 object-cover rounded-lg mr-4" />
   <div>
     <h3 className="text-xl font-semibold">{truncatedName}</h3>
