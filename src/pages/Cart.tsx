@@ -18,10 +18,10 @@ const Cart: React.FC = () => {
   useEffect(() => {
     const items = JSON.parse(localStorage.getItem("cart") || "[]");
   
-    // Assurer que chaque produit a une propriété selectedSizes initialisée
+    // Assure que chaque produit a une propriété selectedSizes initialisée
     const initializedItems = items.map((item: Product) => ({
       ...item,
-      selectedSizes: item.selectedSizes || [], // Initialiser selectedSizes si non défini
+      selectedSizes: item.selectedSizes || [], // Initialise selectedSizes si non défini
     }));
   
     setCartItems(initializedItems);
@@ -104,15 +104,24 @@ const Cart: React.FC = () => {
 
   const handleShare = async () => {
     try {
+      if (cartItems.length === 0) {
+        alert('Votre panier est vide. Ajoutez des produits avant de partager.');
+        return;
+      }
+  
+      // Prendre le premier produit du panier
+      const firstProduct = cartItems[0];
+  
       let message = "Voici les produits ajoutés dans mon panier :\n\n";
-
+  
       cartItems.forEach((item) => {
         const priceText = extractPriceText(item.price);
-        message += `Nom: ${item.name}, Prix: ${priceText}, Quantité: ${getProductQuantity(item.name)}, Tailles sélectionnées: ${item.selectedSizes.join(", ")}\n`;
+        message += `<strong>Nom: </strong>${item.name}, <strong>Prix: </strong>${priceText}, <strong>Quantité: </strong>${getProductQuantity(item.name)},<strong> Tailles sélectionnées:</strong> ${item.selectedSizes.join(", ")}\n`;
       });
-
-      const shareUrl = `${window.location.origin}`;
-
+  
+      // Générer l'URL à partir du premier produit
+      const shareUrl = `${window.location.origin}/detail/${firstProduct.name}`;
+  
       if (navigator.share) {
         await navigator.share({
           title: "Mon panier de produits",
@@ -127,7 +136,7 @@ const Cart: React.FC = () => {
       console.error('Erreur lors du partage:', error);
     }
   };
-
+  
   return (
     <div className="container mx-auto px-4 mt-8">
       <Link to={"/"}>

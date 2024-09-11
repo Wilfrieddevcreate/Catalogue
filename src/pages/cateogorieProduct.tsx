@@ -8,7 +8,8 @@ export interface Product {
   category: string;
   imageSrc: string;
   price: string;
-  count?: number; // Optionnel pour le comptage dans le panier
+  slug: string
+  count?: number; 
 }
 
 const CategoryPage: React.FC = () => {
@@ -104,6 +105,7 @@ const CategoryPage: React.FC = () => {
           category={product.category}
           imageSrc={product.imageSrc}
           price={product.price}
+          slug={product.slug}
           updateCartCount={updateCartCount}
         />
       ))
