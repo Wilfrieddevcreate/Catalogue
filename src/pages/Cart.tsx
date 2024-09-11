@@ -9,6 +9,7 @@ interface Product {
   imageSrc: string;
   price: string;
   quantity: number;
+  slug:string
   selectedSizes: string[]; // Ajout de la propriété pour les tailles sélectionnées
 }
 
@@ -116,11 +117,11 @@ const Cart: React.FC = () => {
   
       cartItems.forEach((item) => {
         const priceText = extractPriceText(item.price);
-        message += `<strong>Nom: </strong>${item.name}, <strong>Prix: </strong>${priceText}, <strong>Quantité: </strong>${getProductQuantity(item.name)},<strong> Tailles sélectionnées:</strong> ${item.selectedSizes.join(", ")}\n`;
+        message += `Nom: ${item.name}, Prix: ${priceText}, Quantité: ${getProductQuantity(item.name)}, Tailles sélectionnées: ${item.selectedSizes.join(", ")}\n`;
       });
   
       // Générer l'URL à partir du premier produit
-      const shareUrl = `${window.location.origin}/detail/${firstProduct.name}`;
+      const shareUrl = `${window.location.origin}/detail/${firstProduct.slug}`;
   
       if (navigator.share) {
         await navigator.share({

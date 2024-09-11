@@ -8,6 +8,7 @@ interface Product {
   imageSrc: string;
   price: string;
   slug: string;
+  count: number; // Ajout du champ count
 }
 
 interface ProductCardProps {
@@ -22,22 +23,45 @@ interface ProductCardProps {
 const ProductCard: React.FC<ProductCardProps> = ({ name, category, imageSrc, price, slug, updateCartCount }) => {
   const [count, setCount] = useState(0);
 
+  // Charger les données du localStorage lors du premier rendu
   useEffect(() => {
-    const storedCount = parseInt(localStorage.getItem(`product-${name}`) || '0', 10);
-    setCount(storedCount);
-  }, [name]);
+    const storedCart = JSON.parse(localStorage.getItem('cart') || '[]');
+    const productInCart = storedCart.find((item: Product) => item.slug === slug);
+    if (productInCart) {
+      setCount(productInCart.count);
+    }
+  }, [slug]);
 
   const handleAddClick = () => {
     const newCount = count + 1;
     setCount(newCount);
-    updateCartCount({ name, category, imageSrc, price ,slug}, 1);
+
+    const storedCart = JSON.parse(localStorage.getItem('cart') || '[]');
+    const updatedCart = storedCart.map((item: Product) => 
+      item.slug === slug ? { ...item, count: newCount } : item
+    );
+
+    // Si le produit n'est pas déjà dans le panier, l'ajouter
+    if (!updatedCart.some((item: Product) => item.slug === slug)) {
+      updatedCart.push({ name, category, imageSrc, price, slug, count: newCount });
+    }
+
+    localStorage.setItem('cart', JSON.stringify(updatedCart));
+    updateCartCount({ name, category, imageSrc, price, slug, count: newCount }, 1);
   };
 
   const handleRemoveClick = () => {
     if (count > 0) {
       const newCount = count - 1;
       setCount(newCount);
-      updateCartCount({ name, category, imageSrc, price,slug }, -1);
+
+      const storedCart = JSON.parse(localStorage.getItem('cart') || '[]');
+      const updatedCart = storedCart
+        .map((item: Product) => item.slug === slug ? { ...item, count: newCount } : item)
+        .filter((item: Product) => item.count > 0); // Supprimer les produits avec count = 0
+
+      localStorage.setItem('cart', JSON.stringify(updatedCart));
+      updateCartCount({ name, category, imageSrc, price, slug, count: newCount }, -1);
     }
   };
 
@@ -47,13 +71,13 @@ const ProductCard: React.FC<ProductCardProps> = ({ name, category, imageSrc, pri
   return (
     <div className="flex items-center justify-between border p-4">
       <div className="flex items-center">
-      <Link to={`/detail/${slug}`} className="flex items-center">
-  <img src={imageSrc} alt={name} className="w-24 h-24 object-cover rounded-lg mr-4" />
-  <div>
-    <h3 className="text-xl font-semibold">{truncatedName}</h3>
-    <p className="text-gray-500 mt-2"><span dangerouslySetInnerHTML={{ __html: price }} /></p>
-  </div>
-</Link>
+        <Link to={`/detail/${slug}`} className="flex items-center">
+          <img src={imageSrc} alt={name} className="w-24 h-24 object-cover rounded-lg mr-4" />
+          <div>
+            <h3 className="text-xl font-semibold">{truncatedName}</h3>
+            <p className="text-gray-500 mt-2"><span dangerouslySetInnerHTML={{ __html: price }} /></p>
+          </div>
+        </Link>
       </div>
 
       <div className="flex items-center">
