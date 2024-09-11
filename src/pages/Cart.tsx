@@ -177,7 +177,7 @@ const Cart: React.FC = () => {
                     className="w-24 h-32 object-cover rounded-lg mr-4"
                   />
                   <div>
-                    <Link to={`/detail/${item.name}`}>
+                    <Link to={`/detail/${item.slug}`}>
                       <h3 className="lg:text-xl font-semibold">{truncatedName}</h3>
                       <p className="text-gray-500 text-sm mt-2">
                         <span dangerouslySetInnerHTML={{ __html: item.price }} />
@@ -202,7 +202,7 @@ const Cart: React.FC = () => {
                       </button>
                     </div>
 
-         <div className="my-4 w-56">
+         <div className="my-4 w-48">
   {/* Conteneur des tailles avec overflow horizontal */}
   <div className="flex space-x-4 overflow-x-auto max-w-full scrollbar-hide">
     {sizes.map((size) => (
