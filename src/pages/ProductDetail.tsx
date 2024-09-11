@@ -170,7 +170,7 @@ const ProductDetailPage: React.FC = () => {
               </button>
             </div>
             <div className='flex justify-center items-center mt-6'>
-              <button onClick={handleShare} className='space-x-3 py-3 px-6 text-white rounded-full border bg-[#25D366]'>
+              <button onClick={handleShare} className='space-x-3 py-3 px-6 text-white rounded-full  bg-[#25D366]'>
                 Partager
               </button>
             </div>
