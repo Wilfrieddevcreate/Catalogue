@@ -92,51 +92,49 @@ const Cart: React.FC = () => {
 
   const generateWhatsAppLink = () => {
     const phoneNumber = "22961790448";
-    let message = "Voici les produits que je souhaite commander:";
+    let message = "Voici les produits que je souhaite commander:\n\n";
 
     cartItems.forEach((item) => {
-      const priceText = extractPriceText(item.price);
-      message += `Nom du produit: ${item.name} Prix: ${priceText} Quantité :${getProductQuantity(item.name)} Tailles sélectionnées: ${item.selectedSizes.join(", ")} `;
+        const priceText = extractPriceText(item.price);
+        message += `Nom du produit: ${item.name}\nPrix: ${priceText}\nQuantité :${getProductQuantity(item.name)}\nTailles sélectionnées: ${item.selectedSizes.join(", ")}\n\n`;
     });
 
     const encodedMessage = encodeURIComponent(message);
     return `https://wa.me/${phoneNumber}?text=${encodedMessage}`;
-  };
+};
 
-  const handleShare = async () => {
-    try {
+const handleShare = async () => {
+  try {
       if (cartItems.length === 0) {
-        alert('Votre panier est vide. Ajoutez des produits avant de partager.');
-        return;
+          alert('Votre panier est vide. Ajoutez des produits avant de partager.');
+          return;
       }
-  
-      // Prendre le premier produit du panier
-      const firstProduct = cartItems[0];
-  
+
       let message = "Voici les produits ajoutés dans mon panier :\n\n";
-  
+
       cartItems.forEach((item) => {
-        const priceText = extractPriceText(item.price);
-        message += `Nom: ${item.name}, Prix: ${priceText}, Quantité: ${getProductQuantity(item.name)}, Tailles sélectionnées: ${item.selectedSizes.join(", ")}\n`;
+          const priceText = extractPriceText(item.price);
+          message += `Nom: ${item.name}\nPrix: ${priceText}\nQuantité: ${getProductQuantity(item.name)}\nTailles sélectionnées: ${item.selectedSizes.join(", ")}\n\n`;
       });
-  
-      // Générer l'URL à partir du premier produit
+
+      const firstProduct = cartItems[0];
       const shareUrl = `${window.location.origin}/detail/${firstProduct.slug}`;
-  
+
       if (navigator.share) {
-        await navigator.share({
-          title: "Mon panier de produits",
-          text: message,
-          url: shareUrl,
-        });
-        console.log('Partager réussi');
+          await navigator.share({
+              title: "Mon panier de produits",
+              text: message,
+              url: shareUrl,
+          });
+          console.log('Partager réussi');
       } else {
-        alert('La fonctionnalité de partage n\'est pas supportée sur ce navigateur.');
+          alert('La fonctionnalité de partage n\'est pas supportée sur ce navigateur.');
       }
-    } catch (error) {
+  } catch (error) {
       console.error('Erreur lors du partage:', error);
-    }
-  };
+  }
+};
+
   const sizes = Array.from({ length: 31 }, (_, i) => (40 + i).toString());
   return (
     <div className="container mx-auto px-4 mt-8">
