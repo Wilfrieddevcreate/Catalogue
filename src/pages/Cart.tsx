@@ -137,7 +137,7 @@ const Cart: React.FC = () => {
       console.error('Erreur lors du partage:', error);
     }
   };
-  
+  const sizes = Array.from({ length: 31 }, (_, i) => (40 + i).toString());
   return (
     <div className="container mx-auto px-4 mt-8">
       <Link to={"/"}>
@@ -202,13 +202,16 @@ const Cart: React.FC = () => {
                       </button>
                     </div>
 
-                    <div className="my-4">
-  <div className="flex flex-row space-x-4">
-    {["SM", "S", "M", "L", "XL"].map((size) => (
+         <div className="my-4 w-56">
+  {/* Conteneur des tailles avec overflow horizontal */}
+  <div className="flex space-x-4 overflow-x-auto max-w-full scrollbar-hide">
+    {sizes.map((size) => (
       <button
         key={size}
         onClick={() => toggleSizeSelection(item.name, size)}
-        className={`p-1 rounded-lg ${item.selectedSizes?.includes(size) ? "bg-[#25D366] text-white" : "bg-gray-200"}`}
+        className={`min-w-[40px] rounded-lg ${
+          item.selectedSizes?.includes(size) ? "bg-[#25D366] text-white" : "bg-gray-200"
+        }`}
       >
         {size}
       </button>
