@@ -7,8 +7,11 @@ import ShareButton from "./pages/gesr";
 import ProductDetailPage from "./pages/ProductDetail";
 import CategorieProducts from "./pages/cateogorieProduct";
 //import { HelmetProvider } from "react-helmet-async";
+import { useEffect } from "react";
 function App() {
-
+  useEffect(() => {
+    console.log('App mounted');
+  }, []);
   return (
     <>
 
