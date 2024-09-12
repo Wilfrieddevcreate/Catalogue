@@ -2,15 +2,15 @@ import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { IoIosArrowBack } from "react-icons/io";
 import { FaWhatsapp } from "react-icons/fa";
-
+import { FaTrash } from "react-icons/fa6";
 interface Product {
   name: string;
   category: string;
   imageSrc: string;
   price: string;
   quantity: number;
-  slug:string
-  selectedSizes: string[]; // Ajout de la propriété pour les tailles sélectionnées
+  slug: string;
+  selectedSizes: string[];
 }
 
 const Cart: React.FC = () => {
@@ -18,16 +18,14 @@ const Cart: React.FC = () => {
 
   useEffect(() => {
     const items = JSON.parse(localStorage.getItem("cart") || "[]");
-  
-    // Assure que chaque produit a une propriété selectedSizes initialisée
+
     const initializedItems = items.map((item: Product) => ({
       ...item,
       selectedSizes: item.selectedSizes || [], // Initialise selectedSizes si non défini
     }));
-  
+
     setCartItems(initializedItems);
   }, []);
-  
 
   const handleRemoveItem = (name: string) => {
     const updatedItems = cartItems.filter((item) => item.name !== name);
@@ -73,67 +71,62 @@ const Cart: React.FC = () => {
     return tempDiv.textContent || tempDiv.innerText || "";
   };
 
-  const toggleSizeSelection = (productName: string, size: string) => {
+  const handleSizeChange = (productName: string, selectedSize: string) => {
     const updatedItems = cartItems.map((item) =>
       item.name === productName
         ? {
             ...item,
-            selectedSizes: item.selectedSizes ? (
-              item.selectedSizes.includes(size)
-                ? item.selectedSizes.filter((s) => s !== size)
-                : [...item.selectedSizes, size]
-            ) : [size], // Initialiser selectedSizes si non défini
+            selectedSizes: [selectedSize], // Remplacer par la taille sélectionnée
           }
         : item
     );
     setCartItems(updatedItems);
   };
-  
 
   const generateWhatsAppLink = () => {
     const phoneNumber = "22961790448";
     let message = "Voici les produits que je souhaite commander:\n\n";
 
     cartItems.forEach((item) => {
-        const priceText = extractPriceText(item.price);
-        message += `Nom du produit: ${item.name}\nPrix: ${priceText}\nQuantité :${getProductQuantity(item.name)}\nTailles sélectionnées: ${item.selectedSizes.join(", ")}\n\n`;
+      const priceText = extractPriceText(item.price);
+      message += `Nom du produit: ${item.name}\nPrix: ${priceText}\nQuantité :${getProductQuantity(item.name)}\nTailles sélectionnées: ${item.selectedSizes.join(", ")}\n\n`;
     });
 
     const encodedMessage = encodeURIComponent(message);
     return `https://wa.me/${phoneNumber}?text=${encodedMessage}`;
-};
+  };
 
-const handleShare = async () => {
-  try {
+  const handleShare = async () => {
+    try {
       if (cartItems.length === 0) {
-          alert('Votre panier est vide. Ajoutez des produits avant de partager.');
-          return;
+        alert("Votre panier est vide. Ajoutez des produits avant de partager.");
+        return;
       }
 
       let message = "Voici les produits ajoutés dans mon panier :\n\n";
 
       cartItems.forEach((item) => {
-          const priceText = extractPriceText(item.price);
-          message += `Nom: ${item.name}\nPrix: ${priceText}\nQuantité: ${getProductQuantity(item.name)}\nTailles sélectionnées: ${item.selectedSizes.join(", ")}\n\n`;
+        const priceText = extractPriceText(item.price);
+        message += `Nom: ${item.name}\nPrix: ${priceText}\nQuantité: ${getProductQuantity(item.name)}\nTailles sélectionnées: ${item.selectedSizes.join(", ")}\n\n`;
       });
 
       const firstProduct = cartItems[0];
       const shareUrl = `${window.location.origin}/detail/${firstProduct.slug}`;
 
       if (navigator.share) {
-          await navigator.share({
-              title: "Mon panier de produits",
-              text: message,
-              url: shareUrl,
-          });
-          console.log('Partager réussi');
+        await navigator.share({
+          title: "Mon panier de produits",
+          text: message,
+          url: shareUrl,
+        });
+        console.log("Partager réussi");
       } else {
-          alert('La fonctionnalité de partage n\'est pas supportée sur ce navigateur.');
+        alert("La fonctionnalité de partage n'est pas supportée sur ce navigateur.");
       }
-  } catch (error) {
-      console.error('Erreur lors du partage:', error);
-  }
-};
+    } catch (error) {
+      console.error("Erreur lors du partage:", error);
+    }
+  };
 
   const sizes = Array.from({ length: 31 }, (_, i) => (40 + i).toString());
   return (
@@ -154,11 +147,11 @@ const handleShare = async () => {
 
       {cartItems.length === 0 ? (
         <>
-          <p className="font-semibold">
-            Ajouter des articles dans votre panier.
-          </p>
+          <p className="font-semibold">Ajouter des articles dans votre panier.</p>
           <p className="text-sm mt-3">
-            Regroupez ici les articles qui vous intéressent et envoyez-les ensuite à l’entreprise. Utilisez votre panier pour vous renseigner sur l’achat, la personnalisation, la livraison ou tout ce que vous souhaitez.
+            Regroupez ici les articles qui vous intéressent et envoyez-les ensuite à
+            l’entreprise. Utilisez votre panier pour vous renseigner sur l’achat, la
+            personnalisation, la livraison ou tout ce que vous souhaitez.
           </p>
         </>
       ) : (
@@ -167,7 +160,10 @@ const handleShare = async () => {
             const truncatedName = item.name.split(" ").slice(0, 2).join(" ");
 
             return (
-              <div key={index} className="flex items-center justify-between border p-4 mb-4">
+              <div
+                key={index}
+                className="flex items-center justify-between border p-4 mb-4"
+              >
                 <div className="flex items-center">
                   <img
                     src={item.imageSrc}
@@ -200,57 +196,64 @@ const handleShare = async () => {
                       </button>
                     </div>
 
-         <div className="my-4 w-48">
-  {/* Conteneur des tailles avec overflow horizontal */}
-  <div className="flex space-x-4 overflow-x-auto max-w-full scrollbar-hide">
-    {sizes.map((size) => (
-      <button
-        key={size}
-        onClick={() => toggleSizeSelection(item.name, size)}
-        className={`min-w-[40px] rounded-lg ${
-          item.selectedSizes?.includes(size) ? "bg-[#25D366] text-white" : "bg-gray-200"
-        }`}
-      >
-        {size}
-      </button>
-    ))}
-  </div>
-</div>
+                    {/* Select for size selection */}
+                    <div className="my-4 w-48">
+                      <select
+                        id={`size-${index}`}
+                        value={item.selectedSizes[0] || ""}
+                        onChange={(e) => handleSizeChange(item.name, e.target.value)}
+                        className="border border-gray-300 rounded-lg p-2 w-24"
+                      >
+                        <option value="" disabled>
+                          La taille
+                        </option>
+                        {sizes.map((size) => (
+                          <option key={size} value={size}>
+                            {size}
+                          </option>
+                        ))}
+                      </select>
+                    </div>
                   </div>
                 </div>
                 <button
                   onClick={() => handleRemoveItem(item.name)}
                   className="text-red-600 hover:text-red-900 bg-red-200 p-2 rounded-sm ml-4"
                 >
-                  Retirer
+                  <FaTrash />
                 </button>
               </div>
             );
           })}
         </div>
       )}
-<div className="">
-          {cartItems.length > 0 ? (
-            <>
-              <div className="flex justify-center">
-                <a href={generateWhatsAppLink()} target="_blank" rel="noopener noreferrer">
-                  <button className="bg-[#25D366] text-white px-3 text-sm py-2 rounded-sm flex items-center space-x-2">
-                    <FaWhatsapp />
-                    <span>Passer la commande</span>
-                  </button>
-                </a>
-              </div>
-              <div className="mt-12 flex justify-center">
-                <button
-                  onClick={handleShare}
-                  className="bg-[#25D366] text-white px-3 text-sm py-2 rounded-sm flex items-center space-x-2"
-                >
-                  <span>Partager</span>
+      <div className="">
+        {cartItems.length > 0 ? (
+          <>
+            <div className="flex justify-center">
+              <a
+                href={generateWhatsAppLink()}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <button className="bg-[#25D366] text-white px-3 text-sm py-2 rounded-sm flex items-center space-x-2">
+                  <FaWhatsapp />
+                  <span>Passer la commande</span>
                 </button>
-              </div>
-            </>
-          ) : (
-                <>
+              </a>
+            </div>
+            <div className="mt-12 flex justify-center">
+              <button
+                onClick={handleShare}
+                className="bg-[#25D366] text-white px-3 text-sm py-2 rounded-sm flex items-center space-x-2"
+              >
+                <FaWhatsapp />
+                <span>Partager le panier</span>
+              </button>
+            </div>
+          </>
+        ) : (
+          <>
                   <div className="flex justify-center">
                     <Link to={"/"}>
                       <p className="mt-3 bg-[#25D366] px-2 py-2 w-auto rounded-sm text-white">
@@ -259,8 +262,8 @@ const handleShare = async () => {
                     </Link>
                   </div>
                 </>
-          )}
-        </div>
+        )}
+      </div>
     </div>
   );
 };
