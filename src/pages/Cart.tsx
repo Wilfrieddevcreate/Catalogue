@@ -76,57 +76,60 @@ const Cart: React.FC = () => {
       item.name === productName
         ? {
             ...item,
-            selectedSizes: [selectedSize], // Remplacer par la taille sélectionnée
+            selectedSizes: [selectedSize],
           }
         : item
     );
     setCartItems(updatedItems);
   };
 
-  const generateWhatsAppLink = () => {
-    const phoneNumber = "22961790448";
-    let message = "Voici les produits que je souhaite commander:\n\n";
+const generateWhatsAppLink = () => {
+  const phoneNumber = "22961790448";
+  let message = "Voici les produits que je souhaite commander:\n\n";
+
+  cartItems.forEach((item) => {
+    const priceText = extractPriceText(item.price);
+    const selectedSize = item.selectedSizes.length > 0 ? item.selectedSizes[0] : "Aucune taille sélectionnée";
+    message += `Nom du produit: ${item.name}\nPrix: ${priceText}\nQuantité: ${getProductQuantity(item.name)}\nTaille sélectionnée: ${selectedSize}\n\n`;
+  });
+
+  const encodedMessage = encodeURIComponent(message);
+  return `https://wa.me/${phoneNumber}?text=${encodedMessage}`;
+};
+
+const handleShare = async () => {
+  try {
+    if (cartItems.length === 0) {
+      alert("Votre panier est vide. Ajoutez des produits avant de partager.");
+      return;
+    }
+
+    let message = "Voici les produits ajoutés dans mon panier :\n\n";
 
     cartItems.forEach((item) => {
       const priceText = extractPriceText(item.price);
-      message += `Nom du produit: ${item.name}\nPrix: ${priceText}\nQuantité :${getProductQuantity(item.name)}\nTailles sélectionnées: ${item.selectedSizes.join(", ")}\n\n`;
+      const selectedSize = item.selectedSizes.length > 0 ? item.selectedSizes[0] : "Aucune taille sélectionnée";
+      message += `Nom: ${item.name}\nPrix: ${priceText}\nQuantité: ${getProductQuantity(item.name)}\nTaille sélectionnée: ${selectedSize}\n\n`;
     });
 
-    const encodedMessage = encodeURIComponent(message);
-    return `https://wa.me/${phoneNumber}?text=${encodedMessage}`;
-  };
+    const firstProduct = cartItems[0];
+    const shareUrl = `${window.location.origin}/detail/${firstProduct.slug}`;
 
-  const handleShare = async () => {
-    try {
-      if (cartItems.length === 0) {
-        alert("Votre panier est vide. Ajoutez des produits avant de partager.");
-        return;
-      }
-
-      let message = "Voici les produits ajoutés dans mon panier :\n\n";
-
-      cartItems.forEach((item) => {
-        const priceText = extractPriceText(item.price);
-        message += `Nom: ${item.name}\nPrix: ${priceText}\nQuantité: ${getProductQuantity(item.name)}\nTailles sélectionnées: ${item.selectedSizes.join(", ")}\n\n`;
+    if (navigator.share) {
+      await navigator.share({
+        title: "Mon panier de produits",
+        text: message,
+        url: shareUrl,
       });
-
-      const firstProduct = cartItems[0];
-      const shareUrl = `${window.location.origin}/detail/${firstProduct.slug}`;
-
-      if (navigator.share) {
-        await navigator.share({
-          title: "Mon panier de produits",
-          text: message,
-          url: shareUrl,
-        });
-        console.log("Partager réussi");
-      } else {
-        alert("La fonctionnalité de partage n'est pas supportée sur ce navigateur.");
-      }
-    } catch (error) {
-      console.error("Erreur lors du partage:", error);
+      console.log("Partager réussi");
+    } else {
+      alert("La fonctionnalité de partage n'est pas supportée sur ce navigateur.");
     }
-  };
+  } catch (error) {
+    console.error("Erreur lors du partage:", error);
+  }
+};
+
 
   const sizes = Array.from({ length: 31 }, (_, i) => (40 + i).toString());
   return (
