@@ -17,13 +17,8 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/panier" element={<Cart />} />
           <Route path="/share" element={<ShareButton />} />
-
           <Route path={`/detail/:slug`} element={<ProductDetailPage />} />
-          <Route path={`/categorie/:categoryName`} element={<CategorieProducts />} />
-
-
-
-
+          <Route path={`/categorie/:categoryName`} element={<CategorieProducts />} /> 
         </Routes>
       </HashRouter>
     
