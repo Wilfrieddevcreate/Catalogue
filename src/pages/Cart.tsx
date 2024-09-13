@@ -113,7 +113,7 @@ const handleShare = async () => {
     });
 
     const firstProduct = cartItems[0];
-    const shareUrl = `${window.location.origin}/detail/${firstProduct.slug}`;
+    const shareUrl = `${window.location.origin}/#/detail/${firstProduct.slug}`;
 
     if (navigator.share) {
       await navigator.share({
