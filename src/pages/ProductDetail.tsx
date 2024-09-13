@@ -87,7 +87,7 @@ const ProductDetailPage: React.FC = () => {
   const handleShare = async () => {
     if (product) {
       try {
-        const shareUrl = `${window.location.origin}/detail/#/${encodeURIComponent(product.slug)}`;
+        const shareUrl = `${window.location.origin}/#/detail/${encodeURIComponent(product.slug)}`;
 
         if (navigator.share) {
           await navigator.share({
