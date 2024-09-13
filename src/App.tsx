@@ -1,5 +1,5 @@
 
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { HashRouter, Routes, Route } from "react-router-dom";
 import ScrollToTop from "./components/Scrolltop";
 import Home from "./pages/home";
 import Cart from "./pages/Cart"
@@ -11,7 +11,7 @@ function App() {
   return (
     <>
 
-    <BrowserRouter>
+    <HashRouter>
         <ScrollToTop />
         <Routes>
           <Route path="/" element={<Home />} />
@@ -25,7 +25,7 @@ function App() {
 
 
         </Routes>
-      </BrowserRouter>
+      </HashRouter>
     
       </>
   )
