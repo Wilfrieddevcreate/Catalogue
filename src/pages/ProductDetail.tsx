@@ -5,6 +5,7 @@ import useSWR from "swr";
 import axios from "axios";
 import { productService } from '../services/product.service';
 import { FaWhatsapp } from "react-icons/fa";
+import { Helmet } from 'react-helmet-async';
 
 interface Product {
   id: number;
@@ -14,7 +15,7 @@ interface Product {
   imageSrc: string;
   price: string;
   count?: number;
-  description?: string; 
+  description?: string;
   category: string;
 }
 
@@ -115,6 +116,16 @@ const ProductDetailPage: React.FC = () => {
 
   return (
     <div className="min-h-screen bg-gray-100">
+      {/* Utilisation de Helmet pour définir les balises meta */}
+      <Helmet>
+        <title>{product.name} - Product Details</title>
+        <meta property="og:title" content={product.name} />
+        <meta property="og:description" content={product.description || 'No description available'} />
+        <meta property="og:image" content={product.imageSrc} />
+        <meta property="og:url" content={`${window.location.origin}/#/detail/${encodeURIComponent(product.slug)}`} />
+        <meta name="twitter:card" content="summary_large_image" />
+      </Helmet>
+
       <div className='container mx-auto px-4 py-6'>
         <div className="relative">
           <Link to={"/"}>
@@ -146,7 +157,10 @@ const ProductDetailPage: React.FC = () => {
                 target="_blank"
                 rel="noopener noreferrer"
               >
-                <button className='flex items-center space-x-3 py-3 px-6 rounded-full text-white bg-[#25D366]'><FaWhatsapp className='text-2xl'/>  <span>Envoyez un message à l'entreprise</span></button>
+                <button className='flex items-center space-x-3 py-3 px-6 rounded-full text-white bg-[#25D366]'>
+                  <FaWhatsapp className='text-2xl' />  
+                  <span>Envoyez un message à l'entreprise</span>
+                </button>
               </a>
             </div>
             <p className="text-xl font-semibold mt-2 text-center text-gray-600">{product.category}</p>

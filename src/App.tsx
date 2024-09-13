@@ -5,20 +5,22 @@ import Home from "./pages/home";
 import Cart from "./pages/Cart"
 import ProductDetailPage from "./pages/ProductDetail";
 import CategorieProducts from "./pages/cateogorieProduct";
+import { HelmetProvider } from 'react-helmet-async';
 function App() {
   
   return (
     <>
-
-    <HashRouter>
-        <ScrollToTop />
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/panier" element={<Cart />} />
-          <Route path={`/detail/:slug`} element={<ProductDetailPage />} />
-          <Route path={`/categorie/:categoryName`} element={<CategorieProducts />} /> 
-        </Routes>
-      </HashRouter>
+      <HelmetProvider>
+          <HashRouter>
+              <ScrollToTop />
+              <Routes>
+                <Route path="/" element={<Home />} />
+                <Route path="/panier" element={<Cart />} />
+                <Route path={`/detail/:slug`} element={<ProductDetailPage />} />
+                <Route path={`/categorie/:categoryName`} element={<CategorieProducts />} /> 
+              </Routes>
+          </HashRouter>
+      </HelmetProvider>
     
       </>
   )
